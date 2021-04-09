@@ -25,7 +25,7 @@ public class Recipe implements Serializable {
 
     @Override
     public String toString() {
-        return "Recipe{" +
+        return "Recipe {" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", ingredient='" + ingredient + '\'' +
