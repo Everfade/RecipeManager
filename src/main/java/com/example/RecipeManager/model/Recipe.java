@@ -15,9 +15,17 @@ public class Recipe implements Serializable {
      @Column(nullable = true,updatable = false)
     private Long id;
     private  String name;
+    private  String description;
     private String ingredient;
     public Recipe(){};
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getName() {
         return name;

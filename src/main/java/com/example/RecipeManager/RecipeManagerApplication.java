@@ -1,13 +1,27 @@
 package com.example.RecipeManager;
 
+import com.example.RecipeManager.model.Recipe;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class RecipeManagerApplication {
 
+      static RecipeJDBC recipeJDBC = null;
+	@Autowired
+	public RecipeManagerApplication(RecipeJDBC recipeJDBC) {
+		this.recipeJDBC = recipeJDBC;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(RecipeManagerApplication.class, args);
+
+		Recipe r= new Recipe();
+		r.setName("test");
+		r.setDescription("test2");
+		recipeJDBC.addRecipe(r);
+
 	}
 
 }
