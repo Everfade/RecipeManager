@@ -1,20 +1,20 @@
-package com.example.RecipeManager;
+package com.example.RecipeManager.dao;
 
 
 import com.example.RecipeManager.model.Recipe;
+import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import java.lang.invoke.MethodHandles;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 @Service
 public class RecipeJDBC implements RecipeDao {
@@ -31,16 +31,51 @@ public class RecipeJDBC implements RecipeDao {
         LOGGER.trace("addRecipe({})", r.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         final String sql;
-        sql = "INSERT INTO " + TABLE_NAME + " (name,description ) VALUES(?,?)";
+        sql = "INSERT INTO " + TABLE_NAME + " (name,description,instructions ) VALUES(?,?,?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1,r.getName());
             stmt.setString(2, r.getDescription());
+            stmt.setString(3,r.getInstructions());
         //    stmt.setString(3, r.getIngredient());
             return stmt;
         }, keyHolder);
 
     }
+    @Override
+    public void deleteRecipe(Recipe r) {
+
+    }
+
+    @Override
+    public void editRecipe(Recipe r) {
+
+    }
+
+    @Override
+    public Recipe getRecipe(String name) {
+        return null;
+    }
+
+    @Override
+    public List<Recipe> getAllRecipes() throws NotFoundException {
+        LOGGER.trace("getAllRecipes");
+        final String sql = "SELECT * FROM " + TABLE_NAME ;
+        List<Recipe> horses = jdbcTemplate.query(sql, this::mapRow);
+        if (horses.isEmpty()) throw new NotFoundException("No Recipes in Database");
+        return horses;
+    }
+
+    private Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
+        final Recipe r = new Recipe();
+        r.setName(resultSet.getString("name"));
+        r.setDescription(resultSet.getString("description"));
+        r.setInstructions(resultSet.getString("instructions"));
+    //    r.setIngredient(resultSet.getString("ingredient"));
+        r.setId(resultSet.getLong("id"));
+        return r;
+    }
+
 }

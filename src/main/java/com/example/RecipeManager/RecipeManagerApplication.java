@@ -1,6 +1,8 @@
 package com.example.RecipeManager;
 
+import com.example.RecipeManager.dao.RecipeJDBC;
 import com.example.RecipeManager.model.Recipe;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,13 +16,14 @@ public class RecipeManagerApplication {
 		this.recipeJDBC = recipeJDBC;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NotFoundException {
 		SpringApplication.run(RecipeManagerApplication.class, args);
 
 		Recipe r= new Recipe();
 		r.setName("test");
 		r.setDescription("test2");
-		recipeJDBC.addRecipe(r);
+	//	recipeJDBC.addRecipe(r);
+		System.out.println( recipeJDBC.getAllRecipes());
 
 	}
 
