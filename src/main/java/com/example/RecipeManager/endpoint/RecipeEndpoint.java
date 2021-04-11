@@ -7,9 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.invoke.MethodHandles;
@@ -17,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(RecipeEndpoint.BASE_URL)
+
 public class RecipeEndpoint {
     static final String BASE_URL = "/recipes";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -29,9 +29,32 @@ public class RecipeEndpoint {
         this.recipeService = recipeService;
     }
 
-    @GetMapping
-    public List<Recipe> getAllRecipes() throws NotFoundException {
+    @GetMapping("/all")
+    public ResponseEntity<List<Recipe>> getAllRecipes() throws NotFoundException {
         LOGGER.info("GET " + BASE_URL + "/");
-            return recipeService.getAllRecipes();
+         List<Recipe> r= recipeService.getAllRecipes();
+        return  new ResponseEntity<>(r,HttpStatus.OK);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe r){
+        Recipe recipe   = recipeService.addRecipe(r);
+        return new ResponseEntity<>(recipe,HttpStatus.CREATED);
+    }
+    @PutMapping("/update")
+    public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe r){
+        Recipe recipe   = recipeService.updateRecipe(r);
+        return new ResponseEntity<>(recipe,HttpStatus.OK);
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteRecipe(@PathVariable("id") Long id) throws Throwable {
+        LOGGER.info("GET " + BASE_URL + "/");
+        recipeService.deleteRecipe(id);
+        return  new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Recipe> getAllRecipes(@PathVariable("id") Long id) throws Throwable {
+        LOGGER.info("GET " + BASE_URL + "/");
+        Recipe r= recipeService.getRecipeById(id);
+        return  new ResponseEntity<>(r,HttpStatus.OK);
     }
 }

@@ -9,7 +9,7 @@ public interface RecipeDao {
     void addRecipe(Recipe r);
     void deleteRecipe(Recipe r);
     void editRecipe(Recipe r);
-    Recipe getRecipe(String name);
+    Recipe getRecipe(String name) throws NotFoundException;
     List<Recipe> getAllRecipes() throws NotFoundException;
 
 }

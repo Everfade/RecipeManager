@@ -55,17 +55,22 @@ public class RecipeJDBC implements RecipeDao {
     }
 
     @Override
-    public Recipe getRecipe(String name) {
-        return null;
+    public Recipe getRecipe(String name) throws NotFoundException {
+        LOGGER.trace("getAllRecipe with name "+name);
+        final String sql = "SELECT * FROM " + TABLE_NAME +"WHERE NAME = ? ";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+      List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,name);
+        if (r.isEmpty()) throw new NotFoundException("Could not find recipe with name " + name);
+        return r.get(0);
     }
 
     @Override
     public List<Recipe> getAllRecipes() throws NotFoundException {
         LOGGER.trace("getAllRecipes");
         final String sql = "SELECT * FROM " + TABLE_NAME ;
-        List<Recipe> horses = jdbcTemplate.query(sql, this::mapRow);
-        if (horses.isEmpty()) throw new NotFoundException("No Recipes in Database");
-        return horses;
+        List<Recipe> recipes = jdbcTemplate.query(sql, this::mapRow);
+        if (recipes.isEmpty()) throw new NotFoundException("No Recipes in Database");
+        return recipes;
     }
 
     private Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
