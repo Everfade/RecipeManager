@@ -1,7 +1,5 @@
 package com.example.RecipeManager.model;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +14,7 @@ public class Recipe implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private String ingredient;
+    private String ingredients;
 
     public String getInstructions() {
         return instructions;
@@ -46,7 +44,7 @@ public class Recipe implements Serializable {
         return "Recipe {" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", ingredient='" + ingredient + '\'' +
+                ", ingredient='" + ingredients + '\'' +
                 '}';
     }
 
@@ -54,12 +52,12 @@ public class Recipe implements Serializable {
         this.name = name;
     }
 
-    public String getIngredient() {
-        return ingredient;
+    public String getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredient(String ingrediant) {
-        this.ingredient = ingredient;
+    public void setIngredients(String ingrediant) {
+        this.ingredients = ingredients;
     }
 
     public void setId(Long id) {
