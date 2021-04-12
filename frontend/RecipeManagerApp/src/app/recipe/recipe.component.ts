@@ -6,11 +6,12 @@ import {HttpErrorResponse} from "@angular/common/http";
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
-  styleUrls: ['./recipe.component.css']
+  styleUrls: ['./recipe.component.scss']
 })
 export class RecipeComponent implements OnInit {
    recipeService:RecipeService;
   public  recipes:Recipe[]=[];
+
 
   constructor(private rs:RecipeService) {
 
@@ -29,4 +30,16 @@ export class RecipeComponent implements OnInit {
     }
 
     )}
+
+  openRecipeDetail(id: number) {
+
+  }
+
+  openRecipeEdit(id: number) {
+
+  }
+
+  openRecipeAdd( ) {
+
+  }
 }

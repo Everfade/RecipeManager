@@ -10,32 +10,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 @RestController
 @RequestMapping(RecipeEndpoint.BASE_URL)
-@CrossOrigin( origins="http://localhost:8081")
+@CrossOrigin(origins = "*", maxAge = 3600)//goddamn that cost so much time
 public class RecipeEndpoint {
     static final String BASE_URL = "/recipes";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final RecipeService recipeService;
-
 
     @Autowired
     public RecipeEndpoint(RecipeService recipeService) {
         LOGGER.info("success");
         this.recipeService = recipeService;
     }
-    @CrossOrigin( origins="http://localhost:8081"+BASE_URL+"/all")
+
     @GetMapping("/all")
     public ResponseEntity<List<Recipe>> getAllRecipes() throws NotFoundException {
         LOGGER.info("GET " + BASE_URL + "/");
          List<Recipe> r= recipeService.getAllRecipes();
         return  new ResponseEntity<>(r,HttpStatus.OK);
     }
-    @CrossOrigin( origins="http://localhost:8081")
+
     @PostMapping("/add")
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe r){
         Recipe recipe   = recipeService.addRecipe(r);

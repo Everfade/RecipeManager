@@ -1,1 +1,36 @@
-<p>re!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+<div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Recipes</h3>
+  <div class="card-body">
+    <!-- <div class="container mt-3" *ngIf="horse">-->
+    <div id="recipeTable" class="app-Recipe">
+       <span class="table-add float-right mb-3 mr-2">
+      <a class="text-success" (click)="openRecipeAdd( )">
+         ADD Recipe
+        </a>
+      </span>
+
+
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <tr>
+          <th class="text-center">Name</th>
+          <th class="text-center">Description</th>
+        </tr>
+        <tr *ngFor="let r of  recipes;let id= index ">
+
+          <td>
+            <span >{{r.name}}</span>
+          </td>
+          <td>
+            <span>{{r.description}}</span>
+          </td>
+          <span class="edit">
+              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeDetail(id)">Details</button>
+            </span> <br><br>
+          <span class="edit">
+              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(id)">Edit</button>
+            </span> <br>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
