@@ -15,7 +15,7 @@ public interface RecipeRepo  extends JpaRepository<Recipe,Long> {
 
     void deleteRecipeById(Long id);
 
-    Optional<Recipe> findRecipeById(Long id);
+   Recipe findRecipeById(Long id);
 
  //   Recipe updateRecipe(Recipe r);
 }

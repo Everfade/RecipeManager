@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(RecipeEndpoint.BASE_URL)
-
+@CrossOrigin( origins="http://localhost:8081")
 public class RecipeEndpoint {
     static final String BASE_URL = "/recipes";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -28,13 +28,14 @@ public class RecipeEndpoint {
         LOGGER.info("success");
         this.recipeService = recipeService;
     }
-
+    @CrossOrigin( origins="http://localhost:8081"+BASE_URL+"/all")
     @GetMapping("/all")
     public ResponseEntity<List<Recipe>> getAllRecipes() throws NotFoundException {
         LOGGER.info("GET " + BASE_URL + "/");
          List<Recipe> r= recipeService.getAllRecipes();
         return  new ResponseEntity<>(r,HttpStatus.OK);
     }
+    @CrossOrigin( origins="http://localhost:8081")
     @PostMapping("/add")
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe r){
         Recipe recipe   = recipeService.addRecipe(r);

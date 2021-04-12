@@ -45,8 +45,8 @@ public class RecipeServiceImp implements  RecipeService{
             return dao.getAllRecipes();
     }
     public  Recipe getRecipeById(Long id) throws Throwable {
-        return  repo.findRecipeById(id)
-                .orElseThrow(()-> new RecipeNotFoundException("Recipe with this name does not exist"));
+        return  repo.findRecipeById(id);
+
     }
 
     @Override

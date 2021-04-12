@@ -15,7 +15,7 @@ public class Recipe implements Serializable {
     private String name;
     private String description;
     private String ingredients;
-
+    private String instructions;
     public String getInstructions() {
         return instructions;
     }
@@ -24,7 +24,7 @@ public class Recipe implements Serializable {
         this.instructions = instructions;
     }
 
-    private String instructions;
+
     public Recipe(){};
 
     public String getDescription() {
