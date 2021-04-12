@@ -7,16 +7,19 @@ import { HeaderComponent } from './header/header.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import {HttpClientModule} from "@angular/common/http";
 import {RecipeService} from "./service/RecipeService";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipeComponent
+    RecipeComponent,
+    SuggestionsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,HttpClientModule
+    AppRoutingModule,HttpClientModule, NgbModule
 
   ],
   providers: [RecipeService],
