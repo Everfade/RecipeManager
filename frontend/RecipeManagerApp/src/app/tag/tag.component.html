@@ -14,14 +14,13 @@
           <th class="text-center">Name</th>
 
         </tr>
+        <div class="center">
         <tr *ngFor="let t of  tags;let id= index ">
 
           <td>
-            <span >{{t.name}}</span>
+            <label class="col-form-label">{{t.name}}</label>
           </td>
-          <td>
-            <span>{{t.color}}</span>
-          </td>
+
           <span class="edit">
               <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="removeTag(id)">View</button>
             </span> <br><br>
@@ -29,6 +28,7 @@
               <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openTagEdit(id)">Edit</button>
             </span> <br>
         </tr>
+        </div>
       </table>
     </div>
   </div>

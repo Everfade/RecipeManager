@@ -38,14 +38,14 @@ export class TagComponent implements OnInit {
     )}
 
   openTagAdd() {
-    
+
   }
 
   openTagEdit(id: number) {
-    
+
   }
 
   removeTag(id: number) {
-    
+
   }
 }
