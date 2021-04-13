@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RecipeService} from "../service/RecipeService";
 import {Recipe} from "../entity/Recipe";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-recipe',
@@ -13,7 +14,8 @@ export class RecipeComponent implements OnInit {
   public  recipes:Recipe[]=[];
 
 
-  constructor(private rs:RecipeService) {
+  constructor(private rs:RecipeService  ,private router: Router,
+              private route: ActivatedRoute) {
 
     this.recipeService=rs;
   }
@@ -32,7 +34,7 @@ export class RecipeComponent implements OnInit {
     )}
 
   openRecipeDetail(id: number) {
-
+    this.router.navigate(['recipes/' + this.recipes[id].id], {state: {data: {Number: this.recipes[id].id}}});
   }
 
   openRecipeEdit(id: number) {

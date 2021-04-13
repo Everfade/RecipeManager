@@ -1,0 +1,35 @@
+<div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Tags</h3>
+  <div class="card-body">
+    <!-- <div class="container mt-3" *ngIf="horse">-->
+    <div id="recipeTable" class="app-Recipe">
+       <span class="table-add float-right mb-3 mr-2">
+      <a class="text-success" (click)="openTagAdd( )">
+         ADD Tag
+        </a>
+      </span>
+
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <tr>
+          <th class="text-center">Name</th>
+
+        </tr>
+        <tr *ngFor="let t of  tags;let id= index ">
+
+          <td>
+            <span >{{t.name}}</span>
+          </td>
+          <td>
+            <span>{{t.color}}</span>
+          </td>
+          <span class="edit">
+              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="removeTag(id)">View</button>
+            </span> <br><br>
+          <span class="edit">
+              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openTagEdit(id)">Edit</button>
+            </span> <br>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

@@ -9,13 +9,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {RecipeService} from "./service/RecipeService";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
+import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
+import { TagComponent } from './tag/tag.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     RecipeComponent,
-    SuggestionsComponent
+    SuggestionsComponent,
+    RecipeDetailComponent,
+    TagComponent
   ],
   imports: [
     BrowserModule,

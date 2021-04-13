@@ -1,0 +1,54 @@
+
+
+<div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong>Task: </strong> {{alertMessage}}
+  <button type="button"  (click)="hideAlert($event)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{{recipe.name}} Recipe</h3>
+  <div class="card-body">
+    <!-- <div class="container mt-3" *ngIf="horse">-->
+    <div id="horseTable" class="app-horse">
+       <span class="table-add float-right mb-3 mr-2">
+        <a class="text-success" (click)="openRecipeEdit( )">
+         ADD REc
+        </a>
+      </span>
+
+
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <table style="width:100%">
+          <tr>
+            <th>Name:</th>
+            <td>{{recipe.name}}</td>
+          </tr>
+          <tr>
+            <th>Description :</th>
+            <td>{{recipe.description}}</td>
+          </tr>
+          <tr>
+            <th>Ingredients:</th>
+            <td>{{recipe.ingredients}}</td>
+          </tr>
+          <tr>
+            <th>Instructions:</th>
+            <td>{{recipe.instructions}}</td>
+          </tr>
+
+
+        </table>
+        <span class="edit">
+              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>
+            </span>
+
+        <span class="edit">
+              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
+            </span>
+      </table>
+    </div>
+  </div>
+</div>
+

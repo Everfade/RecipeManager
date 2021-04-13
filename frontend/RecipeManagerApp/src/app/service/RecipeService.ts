@@ -16,6 +16,9 @@ export  class RecipeService{
   public  getRecipes(): Observable<Recipe[]>{
     return  this.httpClient.get<Recipe[]>(this.apiServerUrl+'/recipes/all')
   }
+  public  getRecipeBy(id:number): Observable<Recipe>{
+    return  this.httpClient.get<Recipe>(this.apiServerUrl+'/recipes/find/'+id)
+  }
   public  addRecipes(r:Recipe): Observable<Recipe>{
     return  this.httpClient.post<Recipe>(this.apiServerUrl+'}/recipes/add',r)
   }
