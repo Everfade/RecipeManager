@@ -2,6 +2,7 @@ package com.example.RecipeManager.dao;
 
 
 import com.example.RecipeManager.model.Recipe;
+import com.example.RecipeManager.model.Tag;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,21 @@ public class RecipeJDBC implements RecipeDao {
         List<Recipe> recipes = jdbcTemplate.query(sql, this::mapRow);
         if (recipes.isEmpty()) throw new NotFoundException("No Recipes in Database");
         return recipes;
+    }
+
+    @Override
+    public Recipe getRandomRecipe() throws NotFoundException {
+        LOGGER.trace("getRandomRecipe with name ");
+        final String sql = "SELECT * FROM " + TABLE_NAME +" ORDER BY RANDOM() LIMIT 1 ";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow);
+        if (r.isEmpty()) throw new NotFoundException("Database is empty");
+        return r.get(0);
+    }
+
+    @Override
+    public Recipe getMostFittingRecipe(List<Tag> tags) {
+        return null;
     }
 
     private Recipe mapRow(ResultSet resultSet, int i) throws SQLException {

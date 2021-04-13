@@ -32,8 +32,14 @@ public class RecipeEndpoint {
 
     @GetMapping("/all")
     public ResponseEntity<List<Recipe>> getAllRecipes() throws NotFoundException {
-        LOGGER.info("GET " + BASE_URL + "/");
+        LOGGER.info("GET " + BASE_URL + "/all");
          List<Recipe> r= recipeService.getAllRecipes();
+        return  new ResponseEntity<>(r,HttpStatus.OK);
+    }
+    @GetMapping("/random")
+    public ResponseEntity<Recipe> getRandomRecipes() throws NotFoundException {
+        LOGGER.info("GET " + BASE_URL + "/random");
+        Recipe r= recipeService.getRandomRecipe();
         return  new ResponseEntity<>(r,HttpStatus.OK);
     }
 

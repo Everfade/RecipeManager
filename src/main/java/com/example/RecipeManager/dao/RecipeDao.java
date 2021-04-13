@@ -1,6 +1,7 @@
 package com.example.RecipeManager.dao;
 
 import com.example.RecipeManager.model.Recipe;
+import com.example.RecipeManager.model.Tag;
 import javassist.NotFoundException;
 
 import java.util.List;
@@ -11,5 +12,7 @@ public interface RecipeDao {
     void editRecipe(Recipe r);
     Recipe getRecipe(String name) throws NotFoundException;
     List<Recipe> getAllRecipes() throws NotFoundException;
+    Recipe getRandomRecipe() throws NotFoundException;
+    Recipe getMostFittingRecipe(List<Tag> tags);
 
 }

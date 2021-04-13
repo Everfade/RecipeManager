@@ -59,4 +59,9 @@ public class RecipeServiceImp implements  RecipeService{
     public Recipe getRecipe(String name) throws NotFoundException {
      return dao.getRecipe(name);
     }
-}
+
+     @Override
+     public Recipe getRandomRecipe() throws NotFoundException {
+         return dao.getRandomRecipe();
+     }
+ }

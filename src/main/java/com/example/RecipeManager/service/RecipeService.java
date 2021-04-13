@@ -12,7 +12,7 @@ public interface RecipeService {
     void editRecipe(Recipe r);
     List<Recipe> getAllRecipes() throws NotFoundException;
     Recipe getRecipe(String name) throws NotFoundException;
-
+    Recipe getRandomRecipe() throws NotFoundException;
     Recipe getRecipeById(Long id) throws Throwable;
 
     Recipe updateRecipe(Recipe r);
