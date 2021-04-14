@@ -32,14 +32,13 @@ public class RecipeJDBC implements RecipeDao {
         LOGGER.trace("addRecipe({})", r.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         final String sql;
-        sql = "INSERT INTO " + TABLE_NAME + " (name,description,instructions ) VALUES(?,?,?)";
+        sql = "INSERT INTO " + TABLE_NAME + " (name,description,instructions ) VALUES(?,?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1,r.getName());
             stmt.setString(2, r.getDescription());
-            stmt.setString(3,r.getInstructions());
         //    stmt.setString(3, r.getIngredient());
             return stmt;
         }, keyHolder);
@@ -63,6 +62,11 @@ public class RecipeJDBC implements RecipeDao {
       List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,name);
         if (r.isEmpty()) throw new NotFoundException("Could not find recipe with name " + name);
         return r.get(0);
+        /*select * from recipe INNER JOIN
+RECIPEINSTRUCTIONS ON RECIPE.ID=RECIPEINSTRUCTIONS.repid
+JOIN INSTRUCTION  ON  RECIPEINSTRUCTIONS.INID=
+INSTRUCTION.ID WHERE RECIPE.ID=1
+ */
     }
 
     @Override

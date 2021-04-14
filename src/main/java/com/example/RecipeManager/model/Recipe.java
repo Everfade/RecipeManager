@@ -15,12 +15,12 @@ public class Recipe implements Serializable {
     private String name;
     private String description;
     private String ingredients;
-    private String instructions;
-    public String getInstructions() {
+    private String[] instructions;
+    public String[] getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(String instructions) {
+    public void setInstructions(String[] instructions) {
         this.instructions = instructions;
     }
 
@@ -56,7 +56,7 @@ public class Recipe implements Serializable {
         return ingredients;
     }
 
-    public void setIngredients(String ingrediant) {
+    public void setIngredients(String ingredient) {
         this.ingredients = ingredients;
     }
 

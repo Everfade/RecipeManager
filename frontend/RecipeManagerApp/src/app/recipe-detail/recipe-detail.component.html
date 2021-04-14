@@ -19,27 +19,19 @@
       </span>
 
 
-      <table class="table table-bordered table-responsive-md table-striped text-center">
-        <table style="width:100%">
-          <tr>
-            <th>Name:</th>
-            <td>{{recipe.name}}</td>
-          </tr>
-          <tr>
-            <th>Description :</th>
+            <th>Description :</th><br>
+
             <td>{{recipe.description}}</td>
-          </tr>
-          <tr>
+
+      <br>
             <th>Ingredients:</th>
-            <td>{{recipe.ingredients}}</td>
-          </tr>
-          <tr>
-            <th>Instructions:</th>
-            <td>{{recipe.instructions}}</td>
-          </tr>
+            {{recipe.ingredients}}
+    <br>
+        <h3>    <th>Instructions:</th></h3>
+         <h4>  <td>{{recipe.instructions}}</td></h4>
 
 
-        </table>
+      <br>
         <span class="edit">
               <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>
             </span>
@@ -47,7 +39,7 @@
         <span class="edit">
               <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
             </span>
-      </table>
+
     </div>
   </div>
 </div>
