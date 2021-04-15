@@ -1,6 +1,7 @@
 package com.example.RecipeManager.dao;
 
 
+import com.example.RecipeManager.model.Instruction;
 import com.example.RecipeManager.model.Recipe;
 import com.example.RecipeManager.model.Tag;
 import javassist.NotFoundException;
@@ -82,25 +83,45 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     public Recipe getRandomRecipe() throws NotFoundException {
         LOGGER.trace("getRandomRecipe with name ");
         final String sql = "SELECT * FROM " + TABLE_NAME +" ORDER BY RANDOM() LIMIT 1 ";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow);
         if (r.isEmpty()) throw new NotFoundException("Database is empty");
+        getInstructions(r.get(0));
         return r.get(0);
     }
-
+    @Override
+    public void getInstructions(Recipe p) {
+        final String sql = "select instruction from recipe INNER JOIN" +
+                " RECIPE_INSTRUCTIONS ON RECIPE.ID=RECIPE_INSTRUCTIONS.repid" +
+                " JOIN INSTRUCTION  ON  RECIPE_INSTRUCTIONS.INID= " +
+                " INSTRUCTION.ID WHERE RECIPE.ID= ?";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        List<Instruction> instructions=  jdbcTemplate.query(sql,this::mapInstruction,p.getId());
+        List<String> instText = null;
+        for (Instruction i:instructions) {
+                instText.add(i.getInstruction());
+        }
+        p.setInstructions( instText);
+    }
     @Override
     public Recipe getMostFittingRecipe(List<Tag> tags) {
-        return null;
+            return null;
     }
+
+
 
     private Recipe mapRow(ResultSet resultSet, int i) throws SQLException {
         final Recipe r = new Recipe();
         r.setName(resultSet.getString("name"));
         r.setDescription(resultSet.getString("description"));
-        r.setInstructions(resultSet.getString("instructions"));
+      //  r.setInstructions(resultSet.getString("instructions"));
     //    r.setIngredient(resultSet.getString("ingredient"));
         r.setId(resultSet.getLong("id"));
         return r;
     }
+    private Instruction mapInstruction(ResultSet resultSet, int i) throws SQLException {
+        final Instruction instruction= new Instruction();
+        instruction.setInstruction(resultSet.getString("instruction"));
 
+        return instruction;
+    }
 }

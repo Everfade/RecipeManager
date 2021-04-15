@@ -1,10 +1,8 @@
 package com.example.RecipeManager.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Recipe implements Serializable {
@@ -15,15 +13,16 @@ public class Recipe implements Serializable {
     private String name;
     private String description;
     private String ingredients;
-    private String[] instructions;
-    public String[] getInstructions() {
+    @ElementCollection
+    private List<String> instructions;
+
+    public List<String> getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(String[] instructions) {
+    public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
     }
-
 
     public Recipe(){};
 

@@ -14,5 +14,6 @@ public interface RecipeDao {
     List<Recipe> getAllRecipes() throws NotFoundException;
     Recipe getRandomRecipe() throws NotFoundException;
     Recipe getMostFittingRecipe(List<Tag> tags);
+    void getInstructions(Recipe p);
 
 }
