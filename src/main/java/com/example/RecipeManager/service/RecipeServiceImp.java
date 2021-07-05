@@ -45,7 +45,7 @@ public class RecipeServiceImp implements  RecipeService{
             return dao.getAllRecipes();
     }
     public  Recipe getRecipeById(Long id) throws Throwable {
-        return  repo.findRecipeById(id);
+        return  dao.getRecipeById(id);
 
     }
 

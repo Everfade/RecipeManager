@@ -16,4 +16,5 @@ public interface RecipeDao {
     Recipe getMostFittingRecipe(List<Tag> tags);
     void getInstructions(Recipe p);
 
+    Recipe getRecipeById(Long id) throws NotFoundException;
 }

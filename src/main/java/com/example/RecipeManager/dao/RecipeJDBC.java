@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -73,7 +74,7 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     @Override
     public List<Recipe> getAllRecipes() throws NotFoundException {
         LOGGER.trace("getAllRecipes");
-        final String sql = "SELECT * FROM " + TABLE_NAME ;
+        final String sql = "SELECT name,description,id FROM " + TABLE_NAME ;
         List<Recipe> recipes = jdbcTemplate.query(sql, this::mapRow);
         if (recipes.isEmpty()) throw new NotFoundException("No Recipes in Database");
         return recipes;
@@ -90,18 +91,38 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     }
     @Override
     public void getInstructions(Recipe p) {
-        final String sql = "select instruction from recipe INNER JOIN" +
-                " RECIPE_INSTRUCTIONS ON RECIPE.ID=RECIPE_INSTRUCTIONS.repid" +
-                " JOIN INSTRUCTION  ON  RECIPE_INSTRUCTIONS.INID= " +
-                " INSTRUCTION.ID WHERE RECIPE.ID= ?";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+          String sql = "select instruction.instruction from recipe INNER JOIN RECIPE_INSTRUCTIONS ON" +
+                  " RECIPE.ID = RECIPE_INSTRUCTIONS.repid JOIN INSTRUCTION  ON" +
+                  "  RECIPE_INSTRUCTIONS.INID = INSTRUCTION.ID WHERE RECIPE.ID = ?";
+
+        LOGGER.info(sql.toString());
+
         List<Instruction> instructions=  jdbcTemplate.query(sql,this::mapInstruction,p.getId());
-        List<String> instText = null;
+        LOGGER.info("_________________________________________________");
+        LOGGER.info(instructions.toString());
+       LinkedList<String> instText = new LinkedList<>();
         for (Instruction i:instructions) {
-                instText.add(i.getInstruction());
+
+            instText.add(i.getInstruction());
         }
         p.setInstructions( instText);
+
+
+
     }
+
+    @Override
+    public Recipe getRecipeById(Long id) throws NotFoundException {
+        LOGGER.trace("getAllRecipe with id "+id);
+        final String sql = "SELECT * FROM " + TABLE_NAME +" WHERE id = ? ";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,id);
+        if (r.isEmpty()) throw new NotFoundException("Could not find recipe with name " + id);
+        LOGGER.info( r.get(0).toString());
+        getInstructions(r.get(0));
+        return r.get(0);
+    }
+
     @Override
     public Recipe getMostFittingRecipe(List<Tag> tags) {
             return null;

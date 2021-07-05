@@ -20,6 +20,7 @@ public class Recipe implements Serializable {
         return instructions;
     }
 
+
     public void setInstructions(List<String> instructions) {
         this.instructions = instructions;
     }
