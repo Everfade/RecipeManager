@@ -13,7 +13,7 @@ public interface RecipeDao {
     Recipe getRecipe(String name) throws NotFoundException;
     List<Recipe> getAllRecipes() throws NotFoundException;
     Recipe getRandomRecipe() throws NotFoundException;
-    Recipe getMostFittingRecipe(List<Tag> tags);
+    List<Recipe> getMostFittingRecipes(String[] tags);
     void getInstructions(Recipe p);
 
     Recipe getRecipeById(Long id) throws NotFoundException;

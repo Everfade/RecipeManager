@@ -3,6 +3,7 @@ package com.example.RecipeManager.service;
 import com.example.RecipeManager.dao.RecipeJDBC;
 import com.example.RecipeManager.exception.RecipeNotFoundException;
 import com.example.RecipeManager.model.Recipe;
+import com.example.RecipeManager.model.Tag;
 import com.example.RecipeManager.repo.RecipeRepo;
 import com.example.RecipeManager.util.Validator;
 import javassist.NotFoundException;
@@ -49,7 +50,12 @@ public class RecipeServiceImp implements  RecipeService{
 
     }
 
-    @Override
+     @Override
+     public List<Recipe> getMostFittingRecipes(String[] tags) {
+         return dao.getMostFittingRecipes(tags);
+     }
+
+     @Override
     public Recipe updateRecipe(Recipe r) {
     //
         return  null;

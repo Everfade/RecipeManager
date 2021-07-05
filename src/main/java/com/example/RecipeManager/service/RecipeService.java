@@ -1,6 +1,7 @@
 package com.example.RecipeManager.service;
 
 import com.example.RecipeManager.model.Recipe;
+import com.example.RecipeManager.model.Tag;
 import javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public interface RecipeService {
     Recipe getRecipe(String name) throws NotFoundException;
     Recipe getRandomRecipe() throws NotFoundException;
     Recipe getRecipeById(Long id) throws Throwable;
+    List<Recipe> getMostFittingRecipes(String[] tags);
 
     Recipe updateRecipe(Recipe r);
 }

@@ -1,6 +1,7 @@
 package com.example.RecipeManager.endpoint;
 
 import com.example.RecipeManager.model.Recipe;
+import com.example.RecipeManager.model.Tag;
 import com.example.RecipeManager.service.RecipeService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
@@ -41,6 +42,15 @@ public class RecipeEndpoint {
         LOGGER.info("GET " + BASE_URL + "/random");
         Recipe r= recipeService.getRandomRecipe();
         return  new ResponseEntity<>(r,HttpStatus.OK);
+    }
+    @GetMapping("/search/results")
+    public ResponseEntity<List<Recipe>>filterByTags( @RequestParam(name="searchTags",defaultValue = "") String tags) throws NotFoundException{
+        String[] searchTags= tags.split(",");
+        LOGGER.info("GET " + BASE_URL + "/search/results");
+        List<Recipe> r= recipeService.getMostFittingRecipes(searchTags);
+        return new ResponseEntity<>(r,HttpStatus.OK);
+
+
     }
 
     @PostMapping("/add")

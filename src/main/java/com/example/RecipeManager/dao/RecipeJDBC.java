@@ -124,8 +124,30 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     }
 
     @Override
-    public Recipe getMostFittingRecipe(List<Tag> tags) {
-            return null;
+    public List<Recipe> getMostFittingRecipes(String[] tags) {
+        //ugly hack needs to be written with prepared statment
+          String sql="  select distinct recipe.name,recipe.id,recipe.description from recipe INNER JOIN recipetags" +
+                 " ON RECIPE.id =recipetags.repid JOIN" +
+                 " tag  ON  recipetags.tagid = tag.ID WHERE tag.name = '"+tags[0]+"'";
+
+         String criteraTags="";
+
+         if(tags.length>1) {
+             for(String t: tags){
+                 if(!sql.contains(t)) {
+                     sql += " OR tag.name ='" + t+"'";
+                 }
+                 criteraTags+= t+",";
+             }
+             criteraTags = criteraTags.substring(0, criteraTags.length() - 2);
+         }
+         else{
+             criteraTags=tags[0];
+         }
+        LOGGER.info(sql);
+        List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow);
+
+         return  r;
     }
 
 
