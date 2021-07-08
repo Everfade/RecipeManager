@@ -4,10 +4,11 @@ import {RecipeComponent} from "./recipe/recipe.component";
 import {SuggestionsComponent} from "./suggestions/suggestions.component";
 import {RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
 import {TagComponent} from "./tag/tag.component";
-
+import { FormsModule } from '@angular/forms';
 const routes: Routes = [ {path: 'recipes', component: RecipeComponent},
   { path: 'suggestions', component: SuggestionsComponent},
   { path: 'tags', component: TagComponent},
+
   {path:'recipes/:id',component: RecipeDetailComponent}];
 
 @NgModule({

@@ -33,19 +33,25 @@ public class RecipeJDBC implements RecipeDao {
     public void addRecipe(Recipe r) {
         LOGGER.trace("addRecipe({})", r.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        final String sql;
-        sql = "INSERT INTO " + TABLE_NAME + " (name,description,instructions ) VALUES(?,?)";
+        final String sql= "INSERT INTO " + TABLE_NAME + " (name,description ) VALUES(?,?,?)";
 
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1,r.getName());
             stmt.setString(2, r.getDescription());
+            stmt.setString(3, r.getIngredients());
         //    stmt.setString(3, r.getIngredient());
             return stmt;
         }, keyHolder);
 
+
     }
+    private void insertInstruction(  Recipe r){
+        if(r.getInstructions().size()==0)return;
+        final String sql="INSERT INTO INSTRUCTION (INSTRUCTION, ORDERNR) VALUES(?,?)";
+    }
+
     @Override
     public void deleteRecipe(Recipe r) {
 
@@ -91,7 +97,7 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     }
     @Override
     public void getInstructions(Recipe p) {
-          String sql = "select instruction.instruction from recipe INNER JOIN RECIPE_INSTRUCTIONS ON" +
+          String sql = "select instruction.instruction,instruction.orderNr from recipe INNER JOIN RECIPE_INSTRUCTIONS ON" +
                   " RECIPE.ID = RECIPE_INSTRUCTIONS.repid JOIN INSTRUCTION  ON" +
                   "  RECIPE_INSTRUCTIONS.INID = INSTRUCTION.ID WHERE RECIPE.ID = ?";
 
@@ -144,7 +150,6 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
          else{
              criteraTags=tags[0];
          }
-        LOGGER.info(sql);
         List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow);
 
          return  r;

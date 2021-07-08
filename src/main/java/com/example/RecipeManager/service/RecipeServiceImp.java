@@ -26,9 +26,9 @@ public class RecipeServiceImp implements  RecipeService{
     }
 
 
-    public Recipe addRecipe(Recipe r) {
-        System.out.println( repo.save(r));
-        return r;
+    public void addRecipe(Recipe r) {
+        dao.addRecipe(r);
+
     }
 
     @Override
@@ -46,6 +46,7 @@ public class RecipeServiceImp implements  RecipeService{
             return dao.getAllRecipes();
     }
     public  Recipe getRecipeById(Long id) throws Throwable {
+        //todo order by instruction number (theres probably some fancy delta notation for that look it up)
         return  dao.getRecipeById(id);
 
     }

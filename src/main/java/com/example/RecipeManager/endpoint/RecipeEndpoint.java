@@ -55,8 +55,9 @@ public class RecipeEndpoint {
 
     @PostMapping("/add")
     public ResponseEntity<Recipe> addRecipe(@RequestBody Recipe r){
-        Recipe recipe   = recipeService.addRecipe(r);
-        return new ResponseEntity<>(recipe,HttpStatus.CREATED);
+        LOGGER.info("POST "+ BASE_URL+"/add "+ r.getName()+" "+r.getInstructions().toString());
+        recipeService.addRecipe(r);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @PutMapping("/update")
     public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe r){

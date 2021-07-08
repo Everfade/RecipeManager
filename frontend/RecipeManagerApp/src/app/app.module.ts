@@ -1,32 +1,43 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { RecipeComponent } from './recipe/recipe.component';
-import {HttpClientModule} from "@angular/common/http";
-import {RecipeService} from "./service/RecipeService";
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import{RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SuggestionsComponent } from './suggestions/suggestions.component';
-import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
-import { TagComponent } from './tag/tag.component';
+import{TagComponent} from "./tag/tag.component";
+import {SuggestionsComponent} from "./suggestions/suggestions.component";
+import {CommonModule, DatePipe} from "@angular/common";
+import {HeaderComponent} from "./Header/header.component";
+import {RecipeComponent} from "./recipe/recipe.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipeComponent,
+    TagComponent,
     SuggestionsComponent,
     RecipeDetailComponent,
-    TagComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,HttpClientModule, NgbModule
+    RecipeComponent
+
+
 
   ],
-  providers: [RecipeService],
+  imports: [
+    BrowserModule,CommonModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    NgbModule,ReactiveFormsModule
+  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+
+
+}

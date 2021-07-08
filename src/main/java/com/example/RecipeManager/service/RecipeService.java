@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface RecipeService {
-    Recipe addRecipe(Recipe r);
+    void addRecipe(Recipe r);
     void deleteRecipe(Long r);
     void editRecipe(Recipe r);
     List<Recipe> getAllRecipes() throws NotFoundException;
