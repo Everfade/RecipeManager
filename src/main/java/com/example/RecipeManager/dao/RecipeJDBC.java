@@ -12,10 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import java.lang.invoke.MethodHandles;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,24 +30,31 @@ public class RecipeJDBC implements RecipeDao {
     public void addRecipe(Recipe r) {
         LOGGER.trace("addRecipe({})", r.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        final String sql= "INSERT INTO " + TABLE_NAME + " (name,description ) VALUES(?,?,?)";
+        final String sql= "INSERT INTO " + TABLE_NAME + " (name,description,ingredients ) VALUES(?,?,?) RETURNING ID";
+        List<Integer> recipeIds=jdbcTemplate.query(sql,this::mapIds,r.getName(),r.getDescription(),r.getIngredients());
+        List<Integer> instructionIds=new LinkedList<>();
+        int orderNr=1;
+        final String sqlInstr="INSERT INTO INSTRUCTION (INSTRUCTION, ORDERNR) VALUES(?,?) RETURNING ID";
+        while(r.getInstructions().size()>0){
+            List<Integer> temp=jdbcTemplate.query(sqlInstr,this::mapIds,r.getInstructions().get(0),orderNr);
+            instructionIds.add(temp.get(0));
+            r.getInstructions().remove(0);
+            orderNr++;
 
-        jdbcTemplate.update(connection -> {
-            PreparedStatement stmt = connection.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1,r.getName());
-            stmt.setString(2, r.getDescription());
-            stmt.setString(3, r.getIngredients());
-        //    stmt.setString(3, r.getIngredient());
-            return stmt;
-        }, keyHolder);
-
+        }
+      insertRecipeInstruction(recipeIds.get(0),instructionIds);
 
     }
-    private void insertInstruction(  Recipe r){
-        if(r.getInstructions().size()==0)return;
-        final String sql="INSERT INTO INSTRUCTION (INSTRUCTION, ORDERNR) VALUES(?,?)";
+
+    private void insertRecipeInstruction(Integer recipeId, List<Integer> instructionIds) {
+
+        for (int id: instructionIds){
+            LOGGER.trace("addInstructionRelation({})"+ recipeId+", "+instructionIds);
+            final String sql= "INSERT INTO RECIPE_INSTRUCTIONS (REPID,INID ) VALUES(?,?)";
+            jdbcTemplate.update(sql,recipeId,id);
+        }
     }
+
 
     @Override
     public void deleteRecipe(Recipe r) {
@@ -171,5 +175,8 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
         instruction.setInstruction(resultSet.getString("instruction"));
 
         return instruction;
+    }
+    private  int mapIds(ResultSet resultSet,int i) throws SQLException{
+      return resultSet.getInt("id");
     }
 }
