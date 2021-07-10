@@ -2,6 +2,7 @@ package com.example.RecipeManager.service;
 
 import com.example.RecipeManager.dao.RecipeJDBC;
 import com.example.RecipeManager.exception.RecipeNotFoundException;
+import com.example.RecipeManager.exception.ValidationException;
 import com.example.RecipeManager.model.Recipe;
 import com.example.RecipeManager.model.Tag;
 import com.example.RecipeManager.repo.RecipeRepo;
@@ -33,7 +34,7 @@ public class RecipeServiceImp implements  RecipeService{
 
     @Override
     public void deleteRecipe(Long id) {
-        repo.deleteRecipeById(id);
+        dao.deleteRecipeById(id);
     }
 
     @Override
@@ -41,7 +42,13 @@ public class RecipeServiceImp implements  RecipeService{
 
     }
 
-    @Override
+     @Override
+     public void addTagsToRecipe(List<Tag> tags, Recipe recipe) {
+        if(!validator.validateTagList(tags)) throw new ValidationException("No tags selected");
+         dao.addTagsToRecipe(tags,recipe);
+     }
+
+     @Override
     public List<Recipe> getAllRecipes() throws NotFoundException {
             return dao.getAllRecipes();
     }

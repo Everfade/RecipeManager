@@ -49,8 +49,6 @@ public class RecipeEndpoint {
         LOGGER.info("GET " + BASE_URL + "/search/results");
         List<Recipe> r= recipeService.getMostFittingRecipes(searchTags);
         return new ResponseEntity<>(r,HttpStatus.OK);
-
-
     }
 
     @PostMapping("/add")
@@ -66,7 +64,7 @@ public class RecipeEndpoint {
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteRecipe(@PathVariable("id") Long id) throws Throwable {
-        LOGGER.info("GET " + BASE_URL + "/");
+        LOGGER.info("DELETE " + BASE_URL + "/delete/"+id);
         recipeService.deleteRecipe(id);
         return  new ResponseEntity<>(HttpStatus.OK);
     }

@@ -56,10 +56,6 @@ public class RecipeJDBC implements RecipeDao {
     }
 
 
-    @Override
-    public void deleteRecipe(Recipe r) {
-
-    }
 
     @Override
     public void editRecipe(Recipe r) {
@@ -122,6 +118,15 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     }
 
     @Override
+    public void addTagsToRecipe(List<Tag> tags, Recipe r) {
+        while(tags.size()>0){
+            String sql = "INSERT INTO RECIPE_TAGS (REPID,TAGID) VALUES(?,?)";
+            jdbcTemplate.update(sql,tags.get(0),r.getId());
+            tags.remove(0);
+        }
+    }
+
+    @Override
     public Recipe getRecipeById(Long id) throws NotFoundException {
         LOGGER.trace("getAllRecipe with id "+id);
         final String sql = "SELECT * FROM " + TABLE_NAME +" WHERE id = ? ";
@@ -131,6 +136,19 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
         LOGGER.info( r.get(0).toString());
         getInstructions(r.get(0));
         return r.get(0);
+    }
+
+    @Override
+    public void deleteRecipe(Recipe r) {
+        LOGGER.trace("deleteRecipe({})", r.getName());
+        final String sql= "DELETE FROM RECIPE WHERE ID = ?";
+        jdbcTemplate.update(sql,r.getId());
+    }
+    @Override
+    public void deleteRecipeById(Long id) {
+        LOGGER.trace("deleteRecipe({})",id);
+        final String sql= "DELETE FROM RECIPE WHERE ID = ?";
+        jdbcTemplate.update(sql,id);
     }
 
     @Override
