@@ -66,10 +66,14 @@ export class RecipeComponent implements OnInit {
 
   save(content: any) {
     try {
+      let temp= this.modalContent.instructions;
+      this.modalContent.instructions.forEach(function (s){
+        (<String>s).replace('•','')});
       console.log(this.modalContent)
       this.recipeService.addRecipes(this.modalContent).subscribe(
         resp => {
         }, (error: HttpErrorResponse) => {
+          this.modalContent.instructions=temp;
           this.defaultServiceErrorHandling(error);
           setTimeout(() => {
             this.error = false;

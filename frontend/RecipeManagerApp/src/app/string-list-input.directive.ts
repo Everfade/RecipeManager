@@ -18,7 +18,7 @@ export class StringListInputDirective {
   constructor(private elementRef: ElementRef) { }
 
   ngOnInit(): void {
-    let temp: string = '';
+    let temp: string = '•';
     this.stringArray.forEach(item => {
       if (temp)
         temp += "\r\n";
