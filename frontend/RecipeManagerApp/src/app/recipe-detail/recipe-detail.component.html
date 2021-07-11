@@ -28,9 +28,8 @@
             {{recipe.ingredients}}
     <br>
         <h3>    <th>Instructions:</th></h3>
-         <h4>  <td>{{recipe.instructions}}</td></h4>
-
-
+      <h4> Instructions</h4>
+      <textarea appStringListInput [(stringArray)]="recipe.instructions"></textarea>
       <br>
         <span class="edit">
               <button type="button" id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>

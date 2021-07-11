@@ -144,12 +144,9 @@
 				}
 			}
 		}
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
-  },
+  } 
+ 
+   ,
 	"defaultProject": "RecipeManagerApp",
   "styles": [
     "src/styles.css",

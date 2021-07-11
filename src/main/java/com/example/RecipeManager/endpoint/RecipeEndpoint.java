@@ -63,7 +63,7 @@ public class RecipeEndpoint {
         return new ResponseEntity<>(recipe,HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteRecipe(@PathVariable("id") Long id) throws Throwable {
+    public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable("id") Long id) throws Throwable {
         LOGGER.info("DELETE " + BASE_URL + "/delete/"+id);
         recipeService.deleteRecipe(id);
         return  new ResponseEntity<>(HttpStatus.OK);

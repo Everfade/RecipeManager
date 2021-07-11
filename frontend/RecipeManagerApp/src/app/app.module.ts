@@ -12,6 +12,8 @@ import {SuggestionsComponent} from "./suggestions/suggestions.component";
 import {CommonModule, DatePipe} from "@angular/common";
 import {HeaderComponent} from "./Header/header.component";
 import {RecipeComponent} from "./recipe/recipe.component";
+import { StringhandlerComponent } from './stringhandler/stringhandler.component';
+import { StringListInputDirective } from './string-list-input.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import {RecipeComponent} from "./recipe/recipe.component";
     TagComponent,
     SuggestionsComponent,
     RecipeDetailComponent,
-    RecipeComponent
+    RecipeComponent,
+    StringhandlerComponent,
+    StringListInputDirective
 
 
 

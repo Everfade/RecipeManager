@@ -18,6 +18,7 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'))
+    console.log(this.id);
     this.rs.getRecipeBy(this.id).subscribe((data)=>
     this.recipe=data)};
 
@@ -26,7 +27,18 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   remove() {
+    this.rs.deleteRecipes(this.id) .subscribe({
+      next: data => {
+         console.log( 'Delete successful');
 
+      },
+      error: error => {
+        return error.message;
+        console.error('There was an error!', error);
+
+      }
+    });
+    this.router.navigate(['recipes/'], {state: {data: {string: "Recipe has been deleted."}}});
   }
 
   hideAlert($event: MouseEvent) {

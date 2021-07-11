@@ -23,7 +23,7 @@ export class RecipeComponent implements OnInit {
     name:"",
     description:"",
     ingredients:"",
-    instructions:""
+    instructions:[]
   };
 
 
@@ -36,6 +36,9 @@ export class RecipeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+ this.route.data.subscribe((data)=>{
+   console.log(data);
+ })
     console.log("ree")
     this.getRecipes();
   }
