@@ -1,5 +1,5 @@
 ## RecipeManager
-# Website for managing cooking recipes, give them tags and generate suggestions either random or based on selected tags.
+ Website for managing cooking recipes, give them tags and generate suggestions either random or based on selected tags.
 
 ## Development server
 
