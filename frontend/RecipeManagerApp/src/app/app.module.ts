@@ -14,6 +14,17 @@ import {HeaderComponent} from "./Header/header.component";
 import {RecipeComponent} from "./recipe/recipe.component";
 import { StringhandlerComponent } from './stringhandler/stringhandler.component';
 import { StringListInputDirective } from './string-list-input.directive';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatMenuModule} from "@angular/material/menu";
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import {MatIconModule} from "@angular/material/icon";
+import {MatListModule} from "@angular/material/list";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCard, MatCardContent, MatCardModule} from "@angular/material/card";
+
 
 @NgModule({
   declarations: [
@@ -24,7 +35,8 @@ import { StringListInputDirective } from './string-list-input.directive';
     RecipeDetailComponent,
     RecipeComponent,
     StringhandlerComponent,
-    StringListInputDirective
+    StringListInputDirective,
+
 
 
 
@@ -34,7 +46,17 @@ import { StringListInputDirective } from './string-list-input.directive';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule,ReactiveFormsModule
+    NgbModule,ReactiveFormsModule, BrowserAnimationsModule,
+    ScrollingModule,
+    MatToolbarModule,
+    MatListModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,MatCardModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

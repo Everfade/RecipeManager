@@ -13,9 +13,11 @@ import {Tag} from "../entity/Tag";
 })
 
 export class TagComponent implements OnInit {
-  public tags:Tag[];
+  public tags:Tag[]=[];
   tagService:TagService;
   public  recipes:Recipe[]=[];
+  displayAlert: any;
+  alertMessage: any;
 
 
   constructor(private rs:TagService  ,private router: Router,
@@ -30,14 +32,14 @@ export class TagComponent implements OnInit {
   }
 
   public  getAllTags():void{
-    this.tagService.getTags().subscribe((response)=>{
+    this.tagService.getTags().subscribe((response:Tag[])=>{
         this.tags= response;
         console.log(response);
       }
 
     )}
 
-  openTagAdd() {
+  openTagAdd(content: any) {
 
   }
 
@@ -47,5 +49,9 @@ export class TagComponent implements OnInit {
 
   removeTag(id: number) {
 
+  }
+
+  hideAlert($event: MouseEvent) {
+    
   }
 }

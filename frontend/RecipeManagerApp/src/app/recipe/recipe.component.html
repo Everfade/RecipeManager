@@ -1,24 +1,53 @@
 <div class="card">
-  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Recipes</h3>
-  <div class="card-body">
+  <mat-card  class="card-header text-center font-weight-bold text-uppercase py-4">
+    <mat-card-title  >Recipes</mat-card-title>
+
     <!-- <div class="container mt-3" *ngIf="horse">-->
-    <div id="recipeTable" class="app-Recipe">
+
        <span class="table-add float-right mb-3 mr-2">
 
-          <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0" (click)="openRecipeAdd(content )">     ADD Recipe</button>
+          <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0" (click)="openRecipeAdd(content )">     ADD Recipe</button>
 
 
       </span>
-    </div>
-
-
     <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
       <strong>Task: </strong> {{alertMessage}}
       <button type="button"  (click)="hideAlert($event)">
-        <span aria-hidden="true">&times;</span>
       </button>
     </div>
-      <table class="table table-bordered table-responsive-md table-striped text-center">
+
+  </mat-card>
+</div>
+
+    <mat-list     class="content">
+      <mat-list-item  *ngFor="let r of recipes; let id= index">
+
+        <h1 matLine> <h4>{{r.name}}</h4> </h1>
+        <p matLine>
+          <span> {{r.description}} </span>
+        </p>
+
+        <button   mat-icon-button color="primary" [matMenuTriggerFor]="itemMenu" [matMenuTriggerData]="{id:r.id}" >
+          <mat-icon>
+            more_vert
+          </mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-menu #itemMenu="matMenu" #aboveMenu="matMenu">
+      <ng-template matMenuContent let-id="id">
+
+        <button mat-menu-item    (click)="openRecipeDetail(id)">View</button>
+        <button mat-menu-item type="button" mdbBtn   rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(3)">
+          <mat color="primary">Edit</mat></button>
+
+
+      </ng-template>
+    </mat-menu>
+
+    <!--  <table class="table table-bordered table-responsive-md table-striped text-center">
 
 
         <tr>
@@ -46,10 +75,9 @@
         </tr>
 
 
-      </table>
+      </table> -->
 
-    </div>
-  </div>
+
 
 <ng-template #content let-modal>
   <div class="modal-header">

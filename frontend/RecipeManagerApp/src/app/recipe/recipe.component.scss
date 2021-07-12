@@ -1,32 +1,14 @@
+@use '~@angular/material' as mat;
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@angular/material/theming";
+
+@include mat.core();
+@import '~bootstrap/scss/bootstrap.scss';
+
+@import '~bootstrap/scss/bootstrap';
 
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background: #1D1F20;
-}
-table{
-  background-color: dimgrey;
-}
-div{
-  background-color: dimgrey;
-}
+html, body { height: 100%;background-color: dimgray; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-html { background-color: dimgrey; }
 
-button {
-  color       : #422222;
-  height      : auto;
-  line-height : 21px;
-  text-align  : center;
-  width       : auto;
-  border: 3px black;
-  margin:5px;
-  right:10px;
-  padding-bottom: 5px;
-  padding-bottom: 5px;
-  padding-right:10px;
-  min-width:100px;
-}

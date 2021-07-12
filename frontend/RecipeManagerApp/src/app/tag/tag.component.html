@@ -1,35 +1,29 @@
 <div class="card">
-  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Tags</h3>
-  <div class="card-body">
-    <!-- <div class="container mt-3" *ngIf="horse">-->
-    <div id="recipeTable" class="app-Recipe">
+  <mat-card  class="card-header text-center font-weight-bold text-uppercase py-4">
+    <mat-card-title  >Tags</mat-card-title>
+
        <span class="table-add float-right mb-3 mr-2">
-      <a class="text-success" (click)="openTagAdd( )">
-         ADD Tag
-        </a>
+
+          <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0" (click)="openTagAdd(content)"> add Tag</button>
+
+
       </span>
+    <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong>Task: </strong> {{alertMessage}}
+      <button type="button"  (click)="hideAlert($event)">
 
-      <table class="table table-bordered table-responsive-md table-striped text-center">
-        <tr>
-          <th class="text-center">Name</th>
-
-        </tr>
-        <div class="center">
-        <tr *ngFor="let t of  tags;let id= index ">
-
-          <td>
-            <label class="col-form-label">{{t.name}}</label>
-          </td>
-
-          <span class="edit">
-              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="removeTag(id)">View</button>
-            </span> <br><br>
-          <span class="edit">
-              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openTagEdit(id)">Edit</button>
-            </span> <br>
-        </tr>
-        </div>
-      </table>
+      </button>
     </div>
-  </div>
+  </mat-card>
 </div>
+
+            <mat-selection-list class="center" *ngFor="let t of tags" >
+              <mat-list-option color="accent" >
+                <span color="black"> {{t.name}}</span>
+
+              </mat-list-option>
+            </mat-selection-list>
+
+<ng-template #content let-modal>
+</ng-template>
+

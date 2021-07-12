@@ -1,7 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
-/* Importing Bootstrap SCSS file.
-*/@import '~bootstrap/scss/bootstrap.scss';
+@use '~@angular/material' as mat;
+@import "~@angular/material/prebuilt-themes/purple-green.css";
+@import "~@angular/material/theming";
 
-/* Importing Bootstrap SCSS file. */
+@include mat.core();
+@import '~bootstrap/scss/bootstrap.scss';
+
 @import '~bootstrap/scss/bootstrap';
-html { background-color: dimgrey; }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+
+
+// Define a dark theme
+$dark-primary: mat.define-palette(mat.$pink-palette);
+$dark-accent: mat.define-palette(mat.$blue-gray-palette);
+$dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $dark-primary,
+    accent: $dark-accent,
+  )
+));
+
+// Apply the dark theme by default
+@include mat.core-theme($dark-theme);
+
+
+@include mat.all-component-themes($dark-theme);
+@include mat.strong-focus-indicators-theme($dark-theme);
+
