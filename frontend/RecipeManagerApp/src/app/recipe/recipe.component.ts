@@ -5,6 +5,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Tag} from "@angular/compiler/src/i18n/serializers/xml_helper";
 
 @Component({
   selector: 'app-recipe',
@@ -23,7 +24,8 @@ export class RecipeComponent implements OnInit {
     name:"",
     description:"",
     ingredients:"",
-    instructions:[]
+    instructions:[],
+    tags:[]
   };
 
 

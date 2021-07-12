@@ -20,14 +20,14 @@
 </div>
 
     <mat-list     class="content">
-      <mat-list-item  *ngFor="let r of recipes; let id= index">
+      <mat-list-item  *ngFor="let r of recipes; let index= index">
 
         <h1 matLine> <h4>{{r.name}}</h4> </h1>
         <p matLine>
           <span> {{r.description}} </span>
         </p>
 
-        <button   mat-icon-button color="primary" [matMenuTriggerFor]="itemMenu" [matMenuTriggerData]="{id:r.id}" >
+        <button   mat-icon-button color="primary" [matMenuTriggerFor]="itemMenu" [matMenuTriggerData]="{id:index}" >
           <mat-icon>
             more_vert
           </mat-icon>
@@ -40,7 +40,7 @@
       <ng-template matMenuContent let-id="id">
 
         <button mat-menu-item    (click)="openRecipeDetail(id)">View</button>
-        <button mat-menu-item type="button" mdbBtn   rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(3)">
+        <button mat-menu-item type="button" mdbBtn   rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(6)">
           <mat color="primary">Edit</mat></button>
 
 

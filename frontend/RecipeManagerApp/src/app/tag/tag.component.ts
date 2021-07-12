@@ -16,8 +16,12 @@ export class TagComponent implements OnInit {
   public tags:Tag[]=[];
   tagService:TagService;
   public  recipes:Recipe[]=[];
-  displayAlert: any;
-  alertMessage: any;
+  displayAlert: boolean;
+  alertMessage:string;
+  modalContent:Tag={
+    color: "", id: 0,
+    name:""
+  }
 
 
   constructor(private rs:TagService  ,private router: Router,
@@ -52,6 +56,6 @@ export class TagComponent implements OnInit {
   }
 
   hideAlert($event: MouseEvent) {
-    
+
   }
 }

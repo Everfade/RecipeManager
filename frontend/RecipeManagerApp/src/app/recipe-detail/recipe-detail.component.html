@@ -28,9 +28,15 @@
             {{recipe.ingredients}}
     <br>
         <h3>    <th>Instructions:</th></h3>
-      <h4> Instructions</h4>
+
       <ul *ngFor="let ir of  recipe.instructions;let id= index ">
         <li>{{ir}}</li>
+
+
+      </ul>
+      <h3>    <th>Tags:</th></h3>
+      <ul *ngFor="let t of tags;let id= index ">
+        <div *ngIf="recipe.tags.includes(t.id)"><li>{{t.name}}</li></div>
 
       </ul>
       <br>

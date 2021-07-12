@@ -70,11 +70,7 @@ public class RecipeJDBC implements RecipeDao {
       List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,name);
         if (r.isEmpty()) throw new NotFoundException("Could not find recipe with name " + name);
         return r.get(0);
-        /*select * from recipe INNER JOIN
-RECIPEINSTRUCTIONS ON RECIPE.ID=RECIPEINSTRUCTIONS.repid
-JOIN INSTRUCTION  ON  RECIPEINSTRUCTIONS.INID=
-INSTRUCTION.ID WHERE RECIPE.ID=1
- */
+
     }
 
     @Override
@@ -129,12 +125,16 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
     @Override
     public Recipe getRecipeById(Long id) throws NotFoundException {
         LOGGER.trace("getAllRecipe with id "+id);
-        final String sql = "SELECT * FROM " + TABLE_NAME +" WHERE id = ? ";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+        final String sql = "select * from RECIPE LEFT JOIN RECIPETAGS ON REPID=RECIPE.ID  WHERE RECIPE.ID= ? ";
         List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,id);
-        if (r.isEmpty()) throw new NotFoundException("Could not find recipe with name " + id);
-        LOGGER.info( r.get(0).toString());
+        if (r.isEmpty()) throw new NotFoundException("Could not find recipe with id " + id);
+
+        for (Recipe rec: r){
+            LOGGER.info(String.valueOf(rec.getFirstTag()));
+            r.get(0).addTagId(rec.getFirstTag());
+        }
         getInstructions(r.get(0));
+        LOGGER.info( r.get(0).toString());
         return r.get(0);
     }
 
@@ -186,6 +186,10 @@ INSTRUCTION.ID WHERE RECIPE.ID=1
       //  r.setInstructions(resultSet.getString("instructions"));
     //    r.setIngredient(resultSet.getString("ingredient"));
         r.setId(resultSet.getLong("id"));
+        try {
+            r.addTagId(resultSet.getInt("tagid"));
+        }
+        catch (Exception e){return r;}
         return r;
     }
     private Instruction mapInstruction(ResultSet resultSet, int i) throws SQLException {
