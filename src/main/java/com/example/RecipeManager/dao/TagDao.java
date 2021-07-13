@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TagDao {
     void addTag(Tag r);
-    void deleteTag(Tag r);
+    void deleteTag(long id);
     void editTag(Tag r);
 
     List<Tag> getAllTags() throws NotFoundException;

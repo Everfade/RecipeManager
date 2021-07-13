@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface TagService {
     void addTag(Tag t);
-    void deleteTag(Tag t);
+    void deleteTag(long id);
     void editTag(Tag t);
 
     List<Tag> getAllTags() throws NotFoundException;

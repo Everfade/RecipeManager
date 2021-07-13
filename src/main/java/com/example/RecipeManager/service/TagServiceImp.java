@@ -29,7 +29,8 @@ public class TagServiceImp implements  TagService{
     }
 
     @Override
-    public void deleteTag(Tag t) {
+    public void deleteTag(long id) {
+        this.dao.deleteTag(id);
 
     }
 

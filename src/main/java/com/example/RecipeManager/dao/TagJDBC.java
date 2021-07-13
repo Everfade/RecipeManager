@@ -26,13 +26,17 @@ public class TagJDBC implements TagDao {
 
 
     @Override
-    public void addTag(Tag r) {
-
+    public void addTag(Tag t) {
+        LOGGER.trace("postTag{}",t);
+        final String sql="INSERT INTO "+ TABLE_NAME +"(NAME,COLOR) VALUES(?,?)";
+        jdbcTemplate.update(sql,t.getName(),t.getColor());
     }
 
     @Override
-    public void deleteTag(Tag r) {
-
+    public void deleteTag(long id) {
+        LOGGER.trace("deleteTag{}",id);
+        final String sql="DELETE FROM "+ TABLE_NAME+" WHERE ID = ?";
+        jdbcTemplate.update(sql,id);
     }
 
     @Override
@@ -44,7 +48,7 @@ public class TagJDBC implements TagDao {
     public List<Tag> getAllTags() throws NotFoundException {
         LOGGER.trace("getAllTags");
         final String sql = "SELECT * FROM " + TABLE_NAME ;
-        List<Tag> tags = jdbcTemplate.query(sql, this::mapRow);
+            List<Tag> tags = jdbcTemplate.query(sql, this::mapRow);
         if (tags.isEmpty()) throw new NotFoundException("No Tags in Database");
         return tags;
     }

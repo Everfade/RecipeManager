@@ -17,14 +17,49 @@
   </mat-card>
 </div>
 
-            <mat-selection-list class="center" *ngFor="let t of tags" >
+            <mat-selection-list class="center" *ngFor="let t of tags;let id = index" >
               <mat-list-option color="accent" >
+
                 <span color="black"> {{t.name}}</span>
+                <div align="right">
+
+
+                  <button mat-raised-button   (click)="delete(id)">Delete</button>
+                </div>
 
               </mat-list-option>
               <mat-divider></mat-divider>
             </mat-selection-list>
+<div align="center" class="modal-footer">
+  <button mat-raised-button  class="btn btn-outline-dark" (click)="findFittingRecipe(content)">Find Suggestions</button>
+</div>
 
 <ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Tag</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label >Name</label>
+        <div class="input-group">
+          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1"  type="text" name="name" >
+        </div>
+        <label >Pick a Color</label>
+        <div class="input-group">
+          <input type="text"[(colorPicker)]="modalContent.color"  [style.background]="modalContent.color" type="text" name="color" >
+        </div>
+
+
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="save(content)">Save</button>
+  </div>
 </ng-template>
 

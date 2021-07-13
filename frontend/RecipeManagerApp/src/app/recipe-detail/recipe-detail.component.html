@@ -10,15 +10,8 @@
 <div class="card">
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{{recipe.name}} Recipe</h3>
   <div class="card-body">
+
     <!-- <div class="container mt-3" *ngIf="horse">-->
-    <div id="horseTable" class="app-horse">
-       <span class="table-add float-right mb-3 mr-2">
-        <a class="text-success" (click)="openRecipeEdit( )">
-         ADD REc
-        </a>
-      </span>
-
-
             <th>Description :</th><br>
 
             <td>{{recipe.description}}</td>
@@ -32,13 +25,18 @@
       <ul *ngFor="let ir of  recipe.instructions;let id= index ">
         <li>{{ir}}</li>
 
-
       </ul>
+
       <h3>    <th>Tags:</th></h3>
-      <ul *ngFor="let t of tags;let id= index ">
-        <div *ngIf="recipe.tags.includes(t.id)"><li>{{t.name}}</li></div>
+      <mat-list class="content">
+      <mat-list-item *ngFor="let t of tags;let id= index ">
+        <div *ngIf="recipe.tags.includes(t.id)">
+          <h1 matLine> <h4>   {{t.name}}</h4> </h1>
+        <mat-divider></mat-divider>
 
-      </ul>
+        </div>
+      </mat-list-item>
+      </mat-list>
       <br>
         <span class="edit">
               <button type="button" id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>
@@ -48,7 +46,10 @@
               <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
             </span>
 
-    </div>
-  </div>
+
+
 </div>
+
+  </div>
+
 
