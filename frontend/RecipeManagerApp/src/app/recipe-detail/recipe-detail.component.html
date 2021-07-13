@@ -31,19 +31,17 @@
       <mat-list class="content">
       <mat-list-item *ngFor="let t of tags;let id= index ">
         <div *ngIf="recipe.tags.includes(t.id)">
-          <h1 matLine> <h4>   {{t.name}}</h4> </h1>
+          <h1 matLine> <h4>            <mat-icon    [ngStyle]="{'color':t.color}">circle  </mat-icon>  {{t.name}}</h4> </h1>
         <mat-divider></mat-divider>
-
         </div>
       </mat-list-item>
       </mat-list>
       <br>
         <span class="edit">
-              <button type="button" id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>
+              <button  mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>
             </span>
-
         <span class="edit">
-              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
+              <button mat-raised-button  mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
             </span>
 
 
