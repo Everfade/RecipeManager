@@ -81,6 +81,8 @@ export class RecipeComponent implements OnInit {
             this.error = false;
           }, 5000);
         }, () => {
+          this.recipes.push(this.modalContent);
+          this.getRecipes();
           this.showAlert("Recipe added")
           setTimeout(() => {
             this.displayAlert = false;
@@ -88,7 +90,7 @@ export class RecipeComponent implements OnInit {
         }
       );
       this.modalService.dismissAll();
-      this.getRecipes();
+
     }
     catch (E){
       this.errorMessage=E.toString();

@@ -20,7 +20,8 @@
             <mat-selection-list class="center" *ngFor="let t of tags;let id = index" >
               <mat-list-option color="accent" >
 
-                <span color="black"> {{t.name}}</span>
+                <span color="black">
+                  <mat-icon    [ngStyle]="{'color':t.color}">circle  </mat-icon>{{t.name}}</span>
                 <div align="right">
 
 

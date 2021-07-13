@@ -12,7 +12,7 @@
       </span>
     <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
       <strong>Task: </strong> {{alertMessage}}
-      <button type="button"  (click)="hideAlert($event)">
+      <button  mat-raised-button  (click)="hideAlert($event)">
       </button>
     </div>
 
@@ -47,38 +47,6 @@
       </ng-template>
 
     </mat-menu>
-
-    <!--  <table class="table table-bordered table-responsive-md table-striped text-center">
-
-
-        <tr>
-          <th class="text-center">Name</th>
-
-        </tr>
-        <tr *ngFor="let r of  recipes;let id= index ">
-
-          <td>
-            <h2>
-            <span >{{r.name}}</span>
-            </h2>
-            <br>
-
-          <h5> <span>{{r.description}}</span> </h5>
-            <span class="edit">
-              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeDetail(id)">View</button>
-            </span>
-
-          <span class="edit">
-              <button type="button" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(id)">Edit</button>
-            </span> <br>
-
-          </td>
-        </tr>
-
-
-      </table> -->
-
-
 
 <ng-template #content let-modal>
   <div class="modal-header">

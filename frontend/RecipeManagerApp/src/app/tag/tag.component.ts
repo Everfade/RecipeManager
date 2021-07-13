@@ -80,6 +80,8 @@ export class TagComponent implements OnInit {
       }, () => {
         this.showAlert("Recipe added")
         this.tags.push(this.modalContent);
+        this.getAllTags();
+
         setTimeout(() => {
           this.displayAlert = false;
         }, 5000);
@@ -99,10 +101,24 @@ export class TagComponent implements OnInit {
 
   delete(id:number) {
     console.log(id);
-    this.tagService.deleteTag(this.tags[id].id).subscribe();
-    this.tags.splice(id);
+    this.tagService.deleteTag(this.tags[id].id).subscribe(   resp => {
+      }, (error: HttpErrorResponse) => {
+        this.defaultServiceErrorHandling(error);
+        setTimeout(() => {
+          this.error = false;
+        }, 5000);
+      }, () => {
+        this.showAlert("Tag deleted")
+      this.tags.splice(id);
 
-    this.getAllTags();
+      this.getAllTags();
+        this.tags.push(this.modalContent);
+        setTimeout(() => {
+          this.displayAlert = false;
+        }, 5000);
+      }
+    );
+
   }
 
 }
