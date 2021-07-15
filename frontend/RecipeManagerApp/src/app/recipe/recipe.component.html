@@ -3,13 +3,10 @@
     <mat-card-title  >Recipes</mat-card-title>
 
     <!-- <div class="container mt-3" *ngIf="horse">-->
-
-       <span class="table-add float-right mb-3 mr-2">
-
-          <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0" (click)="openRecipeAdd(content )">     ADD Recipe</button>
-
-
-      </span>
+    <span class="table-add float-right mb-3 mr-2">
+    <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0"
+            (click)="openAddRecipeModal(content)"> add Recipe</button>
+    </span>
     <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
       <strong>Task: </strong> {{alertMessage}}
       <button  mat-raised-button  (click)="hideAlert($event)">
@@ -18,11 +15,21 @@
 
   </mat-card>
 </div>
-
+<label >Search</label>
+<div class="input-group">
+  <input   pattern=".{2,}" required minlength="2"   type="text" name="name" >
+</div>
     <mat-list     class="content">
       <mat-list-item  *ngFor="let r of recipes; let index= index">
 
         <h1 matLine> <h4>{{r.name}}</h4> </h1>
+
+        <mat-chip-list aria-label="tag selection" *ngFor="let t of tags;let id = index">
+          <ng-container *ngIf="recipes[index].tags.includes(t.id)">
+          <mat-chip   [ngStyle]="{'background-color':t.color}">
+            <span style="mix-blend-mode: difference;color: white;">{{t.name}}</span></mat-chip>
+          </ng-container>
+        </mat-chip-list>
         <p matLine>
           <span> {{r.description}} </span>
         </p>
@@ -40,8 +47,9 @@
       <ng-template matMenuContent let-id="id">
 
         <button mat-menu-item    (click)="openRecipeDetail(id)">View</button>
-        <button mat-menu-item type="button" mdbBtn   rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(6)">
-          <mat color="primary">Edit</mat></button>
+
+        <button mat-menu-item    (click)="openTagDialog(content2,id)">Tags</button>
+
 
 
       </ng-template>
@@ -83,3 +91,39 @@
   </div>
 
 </ng-template>
+
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="tagModal">Edit Tags</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
+
+  <mat-selection-list #tagSelection id="tagSelector"   [(ngModel)]="this.selectedRecipe.tags">
+
+
+
+
+
+    <mat-list-option  *ngFor="let t of tags"    [(value)]="t.id" [compareWith]="compareFunction" >
+
+
+     <a style="mix-blend-mode: difference;color: white;">
+      <mat-chip   [ngStyle]="{'background-color':t.color}">
+        {{t.name}}</mat-chip></a>
+      <mat-divider></mat-divider>
+    </mat-list-option>
+
+
+  </mat-selection-list>
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="saveTags(content2)">Save</button>
+  </div>
+</ng-template>
+

@@ -11,7 +11,7 @@ public interface RecipeService {
     void addRecipe(Recipe r);
     void deleteRecipe(Long r);
     void editRecipe(Recipe r);
-    void addTagsToRecipe(List<Tag> tags, Recipe recipe);
+    void addTagsToRecipe(List<Integer> tags, Recipe recipe);
     List<Recipe> getAllRecipes() throws NotFoundException;
     Recipe getRecipe(String name) throws NotFoundException;
     Recipe getRandomRecipe() throws NotFoundException;

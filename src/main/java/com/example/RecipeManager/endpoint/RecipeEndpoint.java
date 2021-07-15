@@ -44,7 +44,7 @@ public class RecipeEndpoint {
         return  new ResponseEntity<>(r,HttpStatus.OK);
     }
     @GetMapping("/search/results")
-    public ResponseEntity<List<Recipe>>filterByTags( @RequestParam(name="searchTags",defaultValue = "") String tags) throws NotFoundException{
+    public ResponseEntity<List<Recipe>>filterByTags( @RequestParam(name="tags",defaultValue = "") String tags) throws NotFoundException{
         String[] searchTags= tags.split(",");
         LOGGER.info("GET " + BASE_URL + "/search/results");
         List<Recipe> r= recipeService.getMostFittingRecipes(searchTags);
@@ -59,8 +59,9 @@ public class RecipeEndpoint {
     }
     @PutMapping("/update")
     public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe r){
-        Recipe recipe   = recipeService.updateRecipe(r);
-        return new ResponseEntity<>(recipe,HttpStatus.OK);
+        LOGGER.info("PUT"+BASE_URL+"/UPDATE "+r.getName()+" "+r.getTags());
+        recipeService.editRecipe(r);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable("id") Long id) throws Throwable {

@@ -13,8 +13,10 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 import java.lang.invoke.MethodHandles;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeJDBC implements RecipeDao {
@@ -55,10 +57,47 @@ public class RecipeJDBC implements RecipeDao {
         }
     }
 
+    private void insertRecipeInstruction(Long repid, List<String> instructions) {
+        for (String inst: instructions){
+            LOGGER.trace("addInstructionRelation({})"+ repid+", "+instructions);
+            final String sql= "INSERT INTO RECIPE_INSTRUCTIONS (REPID,INID ) VALUES(?,?)";
+            jdbcTemplate.update(sql,repid,inst);
+        }
+    }
+
 
 
     @Override
     public void editRecipe(Recipe r) {
+        LOGGER.trace("UPDATE RECIPE with name "+ r.getName());
+        LOGGER.info(r.getTags().toString());
+        //update recipe
+        final String sql = "UPDATE  " + TABLE_NAME +"" +
+                " SET NAME= ?, DESCRIPTION=? WHERE ID = ? ";
+        jdbcTemplate.update(sql,r.getName(),r.getDescription(),r.getId());
+        //delte old relation
+        final String sql2 = "DELETE FROM RECIPE_INSTRUCTIONS WHERE REPID=?; DELETE FROM RECIPETAGS WHERE REPID=?";
+        jdbcTemplate.update(sql2,r.getId(),r.getId());
+        //clean up unused instructions
+        final String sql3="DELETE FROM instruction " +
+                " WHERE NOT EXISTS(SELECT NULL " +
+                "                    FROM RECIPE_INSTRUCTIONS R " +
+                "                )";
+        jdbcTemplate.update(sql3);
+        this.addTagsToRecipe(r.getTags(),r);
+
+        List<Integer> instructionIds=new LinkedList<>();
+        int orderNr=1;
+        final String sqlInstr="INSERT INTO INSTRUCTION (INSTRUCTION, ORDERNR) VALUES(?,?) RETURNING ID";
+        if(r.getInstructions()==null)return;
+        while(r.getInstructions().size()>0){
+            List<Integer> temp=jdbcTemplate.query(sqlInstr,this::mapIds,r.getInstructions().get(0),orderNr);
+            instructionIds.add(temp.get(0));
+            r.getInstructions().remove(0);
+            orderNr++;
+
+        }
+        insertRecipeInstruction(Math.toIntExact(r.getId()),instructionIds);
 
     }
 
@@ -76,7 +115,9 @@ public class RecipeJDBC implements RecipeDao {
     @Override
     public List<Recipe> getAllRecipes() throws NotFoundException {
         LOGGER.trace("getAllRecipes");
-        final String sql = "SELECT name,description,id FROM " + TABLE_NAME ;
+        final String sql = "select recipe.name, recipe.id, recipe.description,"
+        +"array_agg(tagid) FROM RECIPETAGS RIGHT JOIN RECIPE ON REPID=RECIPE.ID "+
+        "GROUP BY RECIPE.NAME,RECIPE.ID,RECIPE.DESCRIPTION";
         List<Recipe> recipes = jdbcTemplate.query(sql, this::mapRow);
         if (recipes.isEmpty()) throw new NotFoundException("No Recipes in Database");
         return recipes;
@@ -93,7 +134,7 @@ public class RecipeJDBC implements RecipeDao {
     }
     @Override
     public void getInstructions(Recipe p) {
-          String sql = "select instruction.instruction,instruction.orderNr from recipe INNER JOIN RECIPE_INSTRUCTIONS ON" +
+          final String sql = "select instruction.instruction,instruction.orderNr from recipe INNER JOIN RECIPE_INSTRUCTIONS ON" +
                   " RECIPE.ID = RECIPE_INSTRUCTIONS.repid JOIN INSTRUCTION  ON" +
                   "  RECIPE_INSTRUCTIONS.INID = INSTRUCTION.ID WHERE RECIPE.ID = ?";
 
@@ -112,26 +153,45 @@ public class RecipeJDBC implements RecipeDao {
 
 
     }
-
     @Override
+    public void addTagsToRecipe(List<Integer> tags, Recipe r) {
+        try {
+            while (tags.size() > 0) {
+                LOGGER.info(tags.get(0).toString());
+                String sql = "INSERT INTO RECIPETAGS (REPID,TAGID) VALUES(?,?)";
+                jdbcTemplate.update(sql, r.getId(), tags.get(0));
+                tags.remove(0);
+            }
+        }
+        catch (Exception e){LOGGER.info(e.getMessage());}
+    }
+/*    @Override
     public void addTagsToRecipe(List<Tag> tags, Recipe r) {
         while(tags.size()>0){
             String sql = "INSERT INTO RECIPE_TAGS (REPID,TAGID) VALUES(?,?)";
-            jdbcTemplate.update(sql,tags.get(0),r.getId());
+            jdbcTemplate.update(sql,tags.get(0).getId(),r.getId());
             tags.remove(0);
         }
-    }
+    }*/
 
     @Override
     public Recipe getRecipeById(Long id) throws NotFoundException {
         LOGGER.trace("getAllRecipe with id "+id);
-        final String sql = "select * from RECIPE LEFT JOIN RECIPETAGS ON REPID=RECIPE.ID  WHERE RECIPE.ID= ? ";
+        final String sql = "select recipe.name, recipe.id, recipe.description,"+
+             " array_agg(tagid) FROM RECIPETAGS RIGHT JOIN RECIPE ON REPID=RECIPE.ID WHERE ID = ?" +
+       " GROUP BY RECIPE.NAME,RECIPE.ID,RECIPE.DESCRIPTION";
         List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,id);
         if (r.isEmpty()) throw new NotFoundException("Could not find recipe with id " + id);
 
         for (Recipe rec: r){
-            LOGGER.info(String.valueOf(rec.getFirstTag()));
-            r.get(0).addTagId(rec.getFirstTag());
+            try {
+
+
+            LOGGER.info(String.valueOf(rec.returnFirstTag()));
+            r.get(0).addTagId(rec.returnFirstTag());}
+            catch (Exception e){
+
+            }
         }
         getInstructions(r.get(0));
         LOGGER.info( r.get(0).toString());
@@ -187,9 +247,15 @@ public class RecipeJDBC implements RecipeDao {
     //    r.setIngredient(resultSet.getString("ingredient"));
         r.setId(resultSet.getLong("id"));
         try {
-            r.addTagId(resultSet.getInt("tagid"));
+            Array a = resultSet.getArray("array_agg");
+
+            Integer[] tagarray = (Integer[]) a.getArray();
+
+            r.setTags((Arrays.asList(tagarray)));
         }
-        catch (Exception e){return r;}
+        catch (Exception e){
+            return r;
+        }
         return r;
     }
     private Instruction mapInstruction(ResultSet resultSet, int i) throws SQLException {

@@ -39,11 +39,12 @@ public class RecipeServiceImp implements  RecipeService{
 
     @Override
     public void editRecipe(Recipe r) {
+        this.dao.editRecipe(r);
 
     }
 
      @Override
-     public void addTagsToRecipe(List<Tag> tags, Recipe recipe) {
+     public void addTagsToRecipe(List<Integer> tags, Recipe recipe) {
         if(!validator.validateTagList(tags)) throw new ValidationException("No tags selected");
          dao.addTagsToRecipe(tags,recipe);
      }

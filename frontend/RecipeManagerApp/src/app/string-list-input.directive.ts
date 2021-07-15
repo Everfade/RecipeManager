@@ -18,6 +18,7 @@ export class StringListInputDirective {
   constructor(private elementRef: ElementRef) { }
 
   ngOnInit(): void {
+    if(this.stringArray==null||this.stringArray==undefined)return;
     let temp: string = '•';
     this.stringArray.forEach(item => {
       if (temp)

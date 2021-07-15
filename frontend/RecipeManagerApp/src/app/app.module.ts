@@ -25,6 +25,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCard, MatCardContent, MatCardModule} from "@angular/material/card";
 import {ColorPickerModule} from "ngx-color-picker";
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {ColorPickerModule} from "ngx-color-picker";
     MatIconModule,
     MatMenuModule,
     MatProgressSpinnerModule,MatCardModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatChipsModule
 
 
   ],

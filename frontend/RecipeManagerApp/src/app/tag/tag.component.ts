@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../service/RecipeService";
 import {Recipe} from "../entity/Recipe";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -15,23 +15,27 @@ import {HttpErrorResponse} from "@angular/common/http";
 })
 
 export class TagComponent implements OnInit {
-  public tags:Tag[]=[];
-  tagService:TagService;
-  public  recipes:Recipe[]=[];
+  public showTagTable = true;
+  public showRecipeTable = false;
+  public tags: Tag[] = [];
+  public selectedTags:number[] =[]
+  tagService: TagService;
+  recipeService: RecipeService;
+  public recipes: Recipe[] = [];
   displayAlert: boolean;
-  alertMessage:string;
-  modalContent:Tag={
+  alertMessage: string;
+  modalContent: Tag = {
     color: "", id: 0,
-    name:""
+    name: ""
   }
   private error: boolean;
 
 
+  constructor(private ts: TagService, private router: Router,
+              private route: ActivatedRoute, private modalService: NgbModal, private  rs: RecipeService) {
 
-  constructor(private ts:TagService  ,private router: Router,
-              private route: ActivatedRoute,  private modalService: NgbModal) {
-
-    this.tagService=ts;
+    this.tagService = ts;
+    this.recipeService = rs;
   }
 
 
@@ -39,18 +43,18 @@ export class TagComponent implements OnInit {
     this.getAllTags();
   }
 
-  public  getAllTags():void{
-    this.tagService.getTags().subscribe((response:Tag[])=>{
-        this.tags= response;
+  public getAllTags(): void {
+    this.tagService.getTags().subscribe((response: Tag[]) => {
+        this.tags = response;
         console.log(response);
       }
-
-    )}
+    )
+  }
 
   openTagAdd(content: any) {
     this.modalService.open(content);
   }
-
+  compareFunction = (o1: any, o2: any)=> o1.id===o2.id;
   openTagEdit(id: number) {
 
   }
@@ -64,6 +68,23 @@ export class TagComponent implements OnInit {
   }
 
   findFittingRecipe(content: any) {
+
+
+
+
+      let searchTags:String[]=[];
+      //for(let i=0;this.selectedTags.length;i++){
+        //searchTags.push(this.tags[this.tags.findIndex(
+        //  (item) => item.id==this.selectedTags[i] )].name)
+  //      }
+        this.recipeService.getRecipesFiltered(["Low carb"]).subscribe(data => {
+          this.recipes = data;
+          this.showTagTable = false;
+          this.showRecipeTable = true;
+
+      })
+
+
 
   }
 
@@ -99,9 +120,9 @@ export class TagComponent implements OnInit {
 
   }
 
-  delete(id:number) {
+  delete(id: number) {
     console.log(id);
-    this.tagService.deleteTag(this.tags[id].id).subscribe(   resp => {
+    this.tagService.deleteTag(this.tags[id].id).subscribe(resp => {
       }, (error: HttpErrorResponse) => {
         this.defaultServiceErrorHandling(error);
         setTimeout(() => {
@@ -109,9 +130,9 @@ export class TagComponent implements OnInit {
         }, 5000);
       }, () => {
         this.showAlert("Tag deleted")
-      this.tags.splice(id);
+        this.tags.splice(id);
 
-      this.getAllTags();
+        this.getAllTags();
         this.tags.push(this.modalContent);
         setTimeout(() => {
           this.displayAlert = false;
@@ -121,4 +142,12 @@ export class TagComponent implements OnInit {
 
   }
 
+  openRecipeDetail(id: any) {
+
+  }
+
+  navigateBack() {
+    this.showRecipeTable=false;
+    this.showTagTable=true;
+  }
 }

@@ -28,17 +28,19 @@
       </ul>
 
       <h3>    <th>Tags:</th></h3>
-      <mat-list class="content">
-      <mat-list-item *ngFor="let t of tags;let id= index ">
+      <mat-list *ngFor="let t of tags;let id= index " class="content">
+
         <div *ngIf="recipe.tags.includes(t.id)">
+          <mat-list-item >
           <h1 matLine> <h4>            <mat-icon    [ngStyle]="{'color':t.color}">circle  </mat-icon>  {{t.name}}</h4> </h1>
         <mat-divider></mat-divider>
+          </mat-list-item>
         </div>
-      </mat-list-item>
+
       </mat-list>
       <br>
         <span class="edit">
-              <button  mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit( )">Edit</button>
+              <button  mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(content )">Edit</button>
             </span>
         <span class="edit">
               <button mat-raised-button  mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
@@ -49,5 +51,41 @@
 </div>
 
   </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Recipe</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label >Name</label>
+        <div class="input-group">
+          <input [(ngModel)]="modalContent.name" type="text"  name="modalContent.name">
+        </div>
+        <label >Description</label>
+        <div class="input-group">
+          <input [(ngModel)]="modalContent.description" type="text"  name="description">
+        </div>
+
+        <div class="form-group custom-input-overlap">
+          <label>instructions</label><br>
+          <textarea appStringListInput [(stringArray)]="modalContent.instructions" name="modalContent.instructions"></textarea>
+        </div>
+        <div class="form-group custom-input-overlap">
+          <label>ingredients</label><br>
+          <input [(ngModel)]="modalContent.ingredients"   type="text" name="modalContent.ingredients" >
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="save(content)">Save</button>
+  </div>
+
+</ng-template>
 
 

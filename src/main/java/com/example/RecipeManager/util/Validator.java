@@ -14,9 +14,8 @@ public class Validator {
     public boolean validateRecipe(){
         return  true;
     }
-    public boolean validateTagList(List<Tag> tags){
-        if(tags==null)return false;
-        if(tags.size()==0)return false;
+    public boolean validateTagList(List<Integer> tags){
+
         return true;
     }
 }

@@ -1,39 +1,96 @@
 <div class="card">
-  <mat-card  class="card-header text-center font-weight-bold text-uppercase py-4">
-    <mat-card-title  >Tags</mat-card-title>
+  <mat-card class="card-header text-center font-weight-bold text-uppercase py-4">
+    <mat-card-title>Tags</mat-card-title>
 
-       <span class="table-add float-right mb-3 mr-2">
+    <span class="table-add float-right mb-3 mr-2">
 
-          <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0" (click)="openTagAdd(content)"> add Tag</button>
+          <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0"
+                  (click)="openTagAdd(content)"> add Tag</button>
 
 
       </span>
-    <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
+    <div *ngIf="displayAlert" class="alert alert-info alert-dismissible fade show" role="alert">
       <strong>Task: </strong> {{alertMessage}}
-      <button type="button"  (click)="hideAlert($event)">
+      <button type="button" (click)="hideAlert($event)">
 
       </button>
     </div>
   </mat-card>
 </div>
 
-            <mat-selection-list class="center" *ngFor="let t of tags;let id = index" >
-              <mat-list-option color="accent" >
+<div *ngIf="showTagTable">
+  <mat-selection-list #tagSelection  [(ngModel)]="this.selectedTags" class="center" >
+    <mat-list-option *ngFor="let t of tags;let id = index"  [(value)]="t.id"  color="accent">
 
                 <span color="black">
-                  <mat-icon    [ngStyle]="{'color':t.color}">circle  </mat-icon>{{t.name}}</span>
-                <div align="right">
+                  <mat-icon [ngStyle]="{'color':t.color}">circle  </mat-icon>
+                  {{t.name}}</span>
+      <div align="right">
 
 
-                  <button mat-raised-button   (click)="delete(id)">Delete</button>
-                </div>
+        <button mat-raised-button (click)="delete(id)">Delete</button>
+      </div>
 
-              </mat-list-option>
-              <mat-divider></mat-divider>
-            </mat-selection-list>
-<div align="center" class="modal-footer">
-  <button mat-raised-button  class="btn btn-outline-dark" (click)="findFittingRecipe(content)">Find Suggestions</button>
+    </mat-list-option>
+    <mat-divider></mat-divider>
+  </mat-selection-list>
+  <div style="text-align: center;">
+    <button mat-raised-button class="btn btn-outline-dark" (click)="findFittingRecipe(content)">Find Suggestions
+    </button>
+  </div>
 </div>
+<div *ngIf="showRecipeTable">   <mat-list     class="content">
+  <mat-list-item  *ngFor="let r of recipes; let index= index">
+
+    <h1 matLine> <h4>{{r.name}}</h4> </h1>
+
+    <mat-chip-list aria-label="tag selection" *ngFor="let t of tags;let id = index">
+      <ng-container *ngIf="recipes[index].tags.includes(t.id)">
+        <mat-chip   [ngStyle]="{'background-color':t.color}">
+          <span style="mix-blend-mode: difference;color: white;">{{t.name}}</span></mat-chip>
+      </ng-container>
+    </mat-chip-list>
+    <p matLine>
+      <span> {{r.description}} </span>
+    </p>
+
+    <button   mat-icon-button color="primary" [matMenuTriggerFor]="itemMenu" [matMenuTriggerData]="{id:index}" >
+      <mat-icon>
+        more_vert
+      </mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+  <div style="text-align: center;">
+  <button mat-raised-button class="btn btn-outline-dark" (click)="navigateBack()">Back</button>
+  </div>
+</div>
+
+
+
+<mat-menu #itemMenu="matMenu" #aboveMenu="matMenu">
+  <ng-template matMenuContent let-id="id">
+
+    <button mat-menu-item    (click)="openRecipeDetail(id)">View</button>
+
+  <!--  <button mat-menu-item    (click)="openTagDialog(content2,id)">Tags</button>
+-->
+
+
+  </ng-template>
+
+</mat-menu>
+
+
+
+
+
+
+
+
+
+
 
 <ng-template #content let-modal>
   <div class="modal-header">
@@ -45,22 +102,23 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label >Name</label>
+        <label>Name</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1"  type="text" name="name" >
+          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1" type="text"
+                 name="name">
         </div>
-        <label >Pick a Color</label>
+        <label>Pick a Color</label>
         <div class="input-group">
-          <input type="text"[(colorPicker)]="modalContent.color"  [style.background]="modalContent.color" type="text" name="color" >
+          <input type="text" [(colorPicker)]="modalContent.color" [style.background]="modalContent.color" type="text"
+                 name="color">
         </div>
-
 
 
       </div>
     </form>
   </div>
-  <div class="modal-footer">
-    <button type="button"  class="btn btn-outline-dark" (click)="save(content)">Save</button>
+  <div style="text-align: center;">
+    <button type="button" class="btn btn-outline-dark" (click)="save(content)">Save</button>
   </div>
 </ng-template>
 

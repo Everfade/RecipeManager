@@ -26,9 +26,15 @@ public class Recipe implements Serializable {
     public List<Integer> getTags() {
         return tags;
     }
-    public  int getFirstTag(){
+    public  int returnFirstTag(){
         if(tags.size()==0)return -1;
-        return this.tags.get(0);
+
+        try {
+            return this.tags.get(0);
+        }
+        catch (Exception e){
+            return -1;
+        }
     }
    public void addTagId(int id){
         if(tags.contains(id))return;;

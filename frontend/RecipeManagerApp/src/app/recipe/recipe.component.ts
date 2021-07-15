@@ -5,7 +5,9 @@ import {HttpErrorResponse} from "@angular/common/http";
 
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Tag} from "@angular/compiler/src/i18n/serializers/xml_helper";
+;
+import {TagService} from "../service/TagService";
+import {Tag} from "../entity/Tag";
 
 @Component({
   selector: 'app-recipe',
@@ -14,7 +16,10 @@ import {Tag} from "@angular/compiler/src/i18n/serializers/xml_helper";
 })
 export class RecipeComponent implements OnInit {
   recipeService:RecipeService;
+   tagService: TagService;
   public  recipes:Recipe[]=[];
+  public tags:Tag[]=[];
+  public selectedTags:Number[]=[];
   public error:boolean=false;
   public displayAlert: boolean=false;
   public errorMessage: string="";
@@ -27,23 +32,35 @@ export class RecipeComponent implements OnInit {
     instructions:[],
     tags:[]
   };
+  public  selectedRecipe=this.modalContent;
+  tagModal: any;
 
 
 
 
-  constructor(private rs:RecipeService  ,private router: Router,
+
+  constructor(private rs:RecipeService ,private  ts:TagService,private router: Router,
               private route: ActivatedRoute,private modalService:NgbModal) {
 
     this.recipeService=rs;
+    this.tagService=ts;
   }
 
   ngOnInit(): void {
  this.route.data.subscribe((data)=>{
    console.log(data);
  })
-    console.log("ree")
+
     this.getRecipes();
+ this.getAllTags();
   }
+  public  getAllTags():void{
+    this.tagService.getTags().subscribe((data)=>{
+        this.tags= data;
+        console.log(data);
+      }
+
+    )}
   public  getRecipes():void{
     this.recipeService.getRecipes().subscribe(
     (response:Recipe[])=>{
@@ -57,14 +74,9 @@ export class RecipeComponent implements OnInit {
     this.router.navigate(['recipes/' + this.recipes[id].id], {state: {data: {Number: this.recipes[id].id}}});
   }
 
-  openRecipeEdit(id: number) {
 
-  }
 
-  openRecipeAdd(content:any) {
-    this.modalService.open(content);
 
-  }
 
   save(content: any) {
     try {
@@ -127,6 +139,32 @@ export class RecipeComponent implements OnInit {
   }
   hideAlert($event: MouseEvent) {
     this.displayAlert=false;
+
+  }
+
+  openTagDialog(content: any, id:number) {
+    this.selectedRecipe=this.recipes[id];
+
+      for (let i = 0; i < this.selectedRecipe.tags.length; i++) {
+        //selects indicies of tags that this recipe already has
+          this.selectedTags.push(this.tags.findIndex(t=>t.id==i));
+      }
+    this.modalService.open(content);
+
+  }
+  compareFunction = (o1: any, o2: any)=> o1.id===o2.id;
+  saveTags(content: any) {
+    this.recipeService.updateRecipe(this.selectedRecipe).subscribe(response=>{
+
+      this.recipes[this.recipes.findIndex(item=>item.id==this.selectedRecipe.id)].tags=this.selectedRecipe.tags;
+
+    });
+    this.modalService.dismissAll();
+
+  }
+
+  openAddRecipeModal(content: any) {
+    this.modalService.open(content);
 
   }
 }
