@@ -34,6 +34,7 @@ export class RecipeComponent implements OnInit {
   };
   public  selectedRecipe=this.modalContent;
   tagModal: any;
+  public displayAlertModal: boolean=false;
 
 
 
@@ -79,6 +80,14 @@ export class RecipeComponent implements OnInit {
 
 
   save(content: any) {
+    if(this.modalContent.name.includes(",")){
+      this.showAlert("Name can't contain symbol:,");
+      return;
+    }
+    if(this.modalContent.name==""){
+      this.showAlert("Name can't be empty")
+      return;
+    }
     try {
       let temp= this.modalContent.instructions;
       this.modalContent.instructions.forEach(function (s){
@@ -133,9 +142,19 @@ export class RecipeComponent implements OnInit {
 
 
 
-  private showAlert(recipeAdded: string) {
-    this.displayAlert= true;
-    this.alertMessage=recipeAdded;
+  private showAlert(message: string) {
+    if(!this.displayAlert){
+      this.displayAlertModal=true;
+    }
+
+    this.alertMessage=message;
+    setTimeout(()=>{
+      this.displayAlertModal=false;
+      this.displayAlert=false;
+      this.alertMessage="";
+
+    },4000)
+
   }
   hideAlert($event: MouseEvent) {
     this.displayAlert=false;

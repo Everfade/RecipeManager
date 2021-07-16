@@ -86,6 +86,11 @@
       </div>
     </form>
   </div>
+  <div *ngIf="displayAlertModal"   class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>Task: </strong> {{alertMessage}}
+    <button  mat-raised-button  (click)="hideAlert($event)">
+    </button>
+  </div>
   <div class="modal-footer">
     <button type="button"  class="btn btn-outline-dark" (click)="save(content)">Save</button>
   </div>
