@@ -13,6 +13,7 @@ public class Recipe implements Serializable {
     private Long id;
     private String name;
     private String description;
+    @Column
     private String ingredients;
     @ElementCollection
     private List<String> instructions;
@@ -78,7 +79,7 @@ public class Recipe implements Serializable {
         return ingredients;
     }
 
-    public void setIngredients(String ingredient) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -89,4 +90,6 @@ public class Recipe implements Serializable {
     public Long getId() {
         return id;
     }
+
+
 }

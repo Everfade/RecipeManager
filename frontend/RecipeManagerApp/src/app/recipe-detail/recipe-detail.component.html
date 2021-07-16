@@ -12,12 +12,12 @@
   <div class="card-body">
 
     <!-- <div class="container mt-3" *ngIf="horse">-->
-            <th>Description :</th><br>
+    <h3>   <th>Description :</th><br></h3>
 
             <td>{{recipe.description}}</td>
 
       <br>
-            <th>Ingredients:</th>
+      <h3>    <th>Ingredients:</th></h3>
             {{recipe.ingredients}}
     <br>
         <h3>    <th>Instructions:</th></h3>
@@ -30,12 +30,12 @@
       <h3>    <th>Tags:</th></h3>
       <mat-list *ngFor="let t of tags;let id= index " class="content">
 
-        <div *ngIf="recipe.tags.includes(t.id)">
-          <mat-list-item >
-          <h1 matLine> <h4>            <mat-icon    [ngStyle]="{'color':t.color}">circle  </mat-icon>  {{t.name}}</h4> </h1>
-        <mat-divider></mat-divider>
+
+          <mat-list-item *ngIf="recipe.tags.includes(t.id)">
+                   <mat-icon     [ngStyle]="{'color':t.color}">circle  </mat-icon>  {{t.name}}
+
           </mat-list-item>
-        </div>
+
 
       </mat-list>
       <br>

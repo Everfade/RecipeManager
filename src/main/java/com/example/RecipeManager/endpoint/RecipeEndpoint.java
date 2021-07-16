@@ -59,7 +59,7 @@ public class RecipeEndpoint {
     }
     @PutMapping("/update")
     public ResponseEntity<Recipe> updateRecipe(@RequestBody Recipe r){
-        LOGGER.info("PUT"+BASE_URL+"/UPDATE "+r.getName()+" "+r.getTags());
+        LOGGER.info("PUT"+BASE_URL+"/UPDATE "+r.getName()+" "+r.getTags()+" "+r.getIngredients());
         recipeService.editRecipe(r);
         return new ResponseEntity<>(HttpStatus.OK);
     }

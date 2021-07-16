@@ -73,8 +73,8 @@ public class RecipeJDBC implements RecipeDao {
         LOGGER.info(r.getTags().toString());
         //update recipe
         final String sql = "UPDATE  " + TABLE_NAME +"" +
-                " SET NAME= ?, DESCRIPTION=? WHERE ID = ? ";
-        jdbcTemplate.update(sql,r.getName(),r.getDescription(),r.getId());
+                " SET NAME= ?, DESCRIPTION=? , INGREDIENTS=? WHERE ID = ? ";
+        jdbcTemplate.update(sql,r.getName(),r.getDescription(),r.getIngredients(),r.getId());
         //delte old relation
         final String sql2 = "DELETE FROM RECIPE_INSTRUCTIONS WHERE REPID=?; DELETE FROM RECIPETAGS WHERE REPID=?";
         jdbcTemplate.update(sql2,r.getId(),r.getId());
@@ -116,7 +116,7 @@ public class RecipeJDBC implements RecipeDao {
     @Override
     public List<Recipe> getAllRecipes() throws NotFoundException {
         LOGGER.trace("getAllRecipes");
-        final String sql = "select recipe.name, recipe.id, recipe.description,"
+        final String sql = "select recipe.name, recipe.id, recipe.description,recipe.ingredients,"
         +"array_agg(tagid) FROM RECIPETAGS RIGHT JOIN RECIPE ON REPID=RECIPE.ID "+
         "GROUP BY RECIPE.NAME,RECIPE.ID,RECIPE.DESCRIPTION";
         List<Recipe> recipes = jdbcTemplate.query(sql, this::mapRow);
@@ -178,9 +178,9 @@ public class RecipeJDBC implements RecipeDao {
     @Override
     public Recipe getRecipeById(Long id) throws NotFoundException {
         LOGGER.trace("getAllRecipe with id "+id);
-        final String sql = "select recipe.name, recipe.id, recipe.description,"+
+        final String sql = "select recipe.name, recipe.id, recipe.description,recipe.ingredients,"+
              " array_agg(tagid) FROM RECIPETAGS RIGHT JOIN RECIPE ON REPID=RECIPE.ID WHERE ID = ?" +
-       " GROUP BY RECIPE.NAME,RECIPE.ID,RECIPE.DESCRIPTION";
+       " GROUP BY RECIPE.NAME,RECIPE.ID,RECIPE.DESCRIPTION,RECIPE.INGREDIENTS";
         List<Recipe> r=  jdbcTemplate.query(sql,this::mapRow,id);
         if (r.isEmpty()) throw new NotFoundException("Could not find recipe with id " + id);
 
@@ -215,7 +215,7 @@ public class RecipeJDBC implements RecipeDao {
     @Override
     public List<Recipe> getMostFittingRecipes(String[] tags) {
         //ugly hack needs to be written with prepared statment
-          String sql="  select distinct recipe.name,recipe.id,recipe.description from recipe INNER JOIN recipetags" +
+          String sql="  select distinct recipe.name,recipe.id,recipe.description,recipe.ingredients from recipe INNER JOIN recipetags" +
                  " ON RECIPE.id =recipetags.repid JOIN" +
                  " tag  ON  recipetags.tagid = tag.ID WHERE tag.name = '"+tags[0]+"'";
 
@@ -244,8 +244,8 @@ public class RecipeJDBC implements RecipeDao {
         final Recipe r = new Recipe();
         r.setName(resultSet.getString("name"));
         r.setDescription(resultSet.getString("description"));
-      //  r.setInstructions(resultSet.getString("instructions"));
-    //    r.setIngredient(resultSet.getString("ingredient"));
+       //  r.setInstructions(resultSet.getString("instructions"));
+        r.setIngredients(resultSet.getString("ingredients"));
         r.setId(resultSet.getLong("id"));
         try {
             Array a = resultSet.getArray("array_agg");
