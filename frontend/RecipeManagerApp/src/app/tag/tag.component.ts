@@ -64,7 +64,7 @@ export class TagComponent implements OnInit {
   }
 
   hideAlert($event: MouseEvent) {
-
+    this.displayAlert=false;
   }
 
   findFittingRecipe(content: any) {
@@ -73,11 +73,17 @@ export class TagComponent implements OnInit {
 
 
       let searchTags:String[]=[];
-      //for(let i=0;this.selectedTags.length;i++){
-        //searchTags.push(this.tags[this.tags.findIndex(
-        //  (item) => item.id==this.selectedTags[i] )].name)
-  //      }
-        this.recipeService.getRecipesFiltered(["Low carb"]).subscribe(data => {
+       for(let i=0;i<this.selectedTags.length;i++){
+         let index=this.tags.findIndex(
+           (item) => item.id==this.selectedTags[i]);
+         if(index>0&& index<this.tags.length) {
+           searchTags.push(this.tags[index].name)
+         }
+       }
+       let s=searchTags.toString()
+
+       console.log("data: "+searchTags)
+        this.recipeService.getRecipesFiltered(searchTags).subscribe(data => {
           this.recipes = data;
           this.showTagTable = false;
           this.showRecipeTable = true;
@@ -99,7 +105,7 @@ export class TagComponent implements OnInit {
           this.error = false;
         }, 5000);
       }, () => {
-        this.showAlert("Recipe added")
+        this.showAlert("Tag added")
         this.tags.push(this.modalContent);
         this.getAllTags();
 
