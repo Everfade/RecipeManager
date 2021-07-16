@@ -101,6 +101,10 @@ export class TagComponent implements OnInit {
       this.showAlert("Name can't contain symbol:,");
       return;
     }
+    if(this.modalContent.name==""){
+      this.showAlert("Name can't be empty")
+      return;
+    }
     this.tagService.postTag(this.modalContent).subscribe(
       resp => {
       }, (error: HttpErrorResponse) => {
@@ -137,7 +141,7 @@ export class TagComponent implements OnInit {
       this.displayAlert=false;
       this.alertMessage="";
 
-    },5000)
+    },4000)
 
   }
 
@@ -182,6 +186,10 @@ export class TagComponent implements OnInit {
   saveTagEdit(content:any) {
     if(this.modalContent.name.includes(",")){
       this.showAlert("Name can't contain symbol:,");
+      return;
+    }
+    if(this.modalContent.name==""){
+      this.showAlert("Name can't be empty")
       return;
     }
     this.tagService.updateTag(this.modalContent).subscribe(()=>{

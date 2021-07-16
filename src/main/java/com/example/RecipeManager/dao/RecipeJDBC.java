@@ -91,6 +91,7 @@ public class RecipeJDBC implements RecipeDao {
         final String sqlInstr="INSERT INTO INSTRUCTION (INSTRUCTION, ORDERNR) VALUES(?,?) RETURNING ID";
         if(r.getInstructions()==null)return;
         while(r.getInstructions().size()>0){
+            r.getInstructions().set(0, r.getInstructions().get(0).replace("•",""));
             List<Integer> temp=jdbcTemplate.query(sqlInstr,this::mapIds,r.getInstructions().get(0),orderNr);
             instructionIds.add(temp.get(0));
             r.getInstructions().remove(0);
@@ -146,7 +147,7 @@ public class RecipeJDBC implements RecipeDao {
        LinkedList<String> instText = new LinkedList<>();
         for (Instruction i:instructions) {
 
-            instText.add(i.getInstruction());
+            instText.add(i.getInstruction().replace("•",""));
         }
         p.setInstructions( instText);
 
