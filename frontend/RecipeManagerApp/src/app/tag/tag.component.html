@@ -11,8 +11,9 @@
       </span>
     <div *ngIf="displayAlert" class="alert alert-info alert-dismissible fade show" role="alert">
       <strong>Task: </strong> {{alertMessage}}
-      <button type="button" (click)="hideAlert($event)">
+      <button  mat-raised-button  (click)="hideAlert($event)">
 
+      Dismiss
       </button>
     </div>
   </mat-card>
@@ -23,7 +24,7 @@
     <mat-list-option *ngFor="let t of tags;let id = index"  [(value)]="t.id"  color="accent">
 
                 <span color="black">
-                  <mat-icon [ngStyle]="{'color':t.color}">circle  </mat-icon>
+                  <mat-icon [ngStyle]="{'color':t.color}" (click)="editTag(id,content2)">circle  </mat-icon>
                   {{t.name}}</span>
       <div align="right">
 
@@ -112,13 +113,48 @@
           <input type="text" [(colorPicker)]="modalContent.color" [style.background]="modalContent.color" type="text"
                  name="color">
         </div>
-
-
       </div>
     </form>
+  </div>
+  <div *ngIf="displayAlertModal"   class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>Error: </strong> {{alertMessage}}
+    <button  mat-raised-button  (click)="hideAlert($event)">
+    </button>
   </div>
   <div style="text-align: center;">
     <button type="button" class="btn btn-outline-dark" (click)="save(content)">Save</button>
   </div>
 </ng-template>
 
+<ng-template #content2 let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Tag</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Name</label>
+        <div class="input-group">
+          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1" type="text"
+                 name="name">
+        </div>
+        <label>Pick a Color</label>
+        <div class="input-group">
+          <input type="text" [(colorPicker)]="modalContent.color" [style.background]="modalContent.color" type="text"
+                 name="color">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="displayAlertModal"   class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>Error: </strong> {{alertMessage}}
+    <button  mat-raised-button  (click)="hideAlert($event)">
+    </button>
+  </div>
+  <div style="text-align: center;">
+    <button type="button" class="btn btn-outline-dark" (click)="saveTagEdit(content2)">Save Changes</button>
+  </div>
+</ng-template>

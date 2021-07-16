@@ -43,4 +43,9 @@ public class TagServiceImp implements  TagService{
     public List<Tag> getAllTags() throws NotFoundException {
         return  dao.getAllTags();
     }
+
+    @Override
+    public void updateTag(Tag t) {
+         this.dao.updateTag(t);
+    }
 }

@@ -40,6 +40,13 @@ public class TagEndpoint {
         ts.addTag(t);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @PutMapping("/update")
+    public ResponseEntity<Tag> putTag(@RequestBody Tag t) throws  NotFoundException{
+        LOGGER.info("PUT "+BASE_URL+"/"+t.getId()+", "+t.getName());
+        ts.updateTag(t);
+        return  new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable("id") Long id) throws Throwable {
         LOGGER.info("DELETE " + BASE_URL + "/delete/"+id);

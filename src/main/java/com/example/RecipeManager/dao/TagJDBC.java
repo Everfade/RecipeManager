@@ -40,11 +40,6 @@ public class TagJDBC implements TagDao {
     }
 
     @Override
-    public void editTag(Tag r) {
-
-    }
-
-    @Override
     public List<Tag> getAllTags() throws NotFoundException {
         LOGGER.trace("getAllTags");
         final String sql = "SELECT * FROM " + TABLE_NAME ;
@@ -52,6 +47,15 @@ public class TagJDBC implements TagDao {
         if (tags.isEmpty()) throw new NotFoundException("No Tags in Database");
         return tags;
     }
+
+    @Override
+    public void updateTag(Tag t) {
+        LOGGER.trace("EditTag{}",t.getId());
+        final String sql="UPDATE TAG SET NAME = ?, COLOR= ? WHERE ID =?";
+        this.jdbcTemplate.update(sql,t.getName(),t.getColor(),t.getId());
+
+    }
+
     private Tag mapRow(ResultSet resultSet, int i) throws SQLException {
         final Tag r = new Tag();
         r.setName(resultSet.getString("name"));

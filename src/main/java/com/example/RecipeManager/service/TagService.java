@@ -12,4 +12,6 @@ public interface TagService {
     void editTag(Tag t);
 
     List<Tag> getAllTags() throws NotFoundException;
+
+    void updateTag(Tag t);
 }

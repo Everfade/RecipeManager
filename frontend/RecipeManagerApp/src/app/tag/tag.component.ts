@@ -22,7 +22,8 @@ export class TagComponent implements OnInit {
   tagService: TagService;
   recipeService: RecipeService;
   public recipes: Recipe[] = [];
-  displayAlert: boolean;
+  displayAlert: boolean=false;
+  displayAlertModal:boolean=false;
   alertMessage: string;
   modalContent: Tag = {
     color: "", id: 0,
@@ -96,7 +97,10 @@ export class TagComponent implements OnInit {
 
 
   save(content: any) {
-    console.log(this.modalContent)
+    if(this.modalContent.name.includes(",")){
+      this.showAlert("Name can't contain symbol:,");
+      return;
+    }
     this.tagService.postTag(this.modalContent).subscribe(
       resp => {
       }, (error: HttpErrorResponse) => {
@@ -122,7 +126,18 @@ export class TagComponent implements OnInit {
 
   }
 
-  private showAlert(recipeAdded: string) {
+  private showAlert(message: string) {
+    if(!this.displayAlert){
+      this.displayAlertModal=true;
+    }
+
+    this.alertMessage=message;
+    setTimeout(()=>{
+      this.displayAlertModal=false;
+      this.displayAlert=false;
+      this.alertMessage="";
+
+    },5000)
 
   }
 
@@ -155,5 +170,37 @@ export class TagComponent implements OnInit {
   navigateBack() {
     this.showRecipeTable=false;
     this.showTagTable=true;
+  }
+
+  editTag(id,content:any) {
+    console.log(id)
+    this.modalContent=this.tags[id];
+    this.modalService.open(content);
+
+  }
+
+  saveTagEdit(content:any) {
+    if(this.modalContent.name.includes(",")){
+      this.showAlert("Name can't contain symbol:,");
+      return;
+    }
+    this.tagService.updateTag(this.modalContent).subscribe(()=>{
+      this.displayAlert=true;
+
+      this.modalService.dismissAll();
+      this.getAllTags();
+      this.modalContent.name="";
+      this.modalContent.color="";
+      this.showAlert("tag updated");
+    },(error:HttpErrorResponse)=> {
+      this.displayAlertModal=true;
+      this.showAlert(error.message);
+
+      setTimeout(()=>{
+        this.displayAlertModal=false;
+      },5000)
+
+    });
+
   }
 }

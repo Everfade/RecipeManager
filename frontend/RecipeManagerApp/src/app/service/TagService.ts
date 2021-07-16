@@ -23,7 +23,9 @@ export class TagService{
   public deleteTag(id:Number){
     const params = new HttpParams().set('id', id.toString());
     return this.httpClient.delete(this.apiServerUrl+'/tags/delete/'+id);
-
-
   }
+  public  updateTag(t:Tag): Observable<Tag>{
+    return  this.httpClient.put<Tag>(this.apiServerUrl+'/tags/update/',t);
+  }
+
 }
