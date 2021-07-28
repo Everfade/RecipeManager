@@ -4,7 +4,7 @@
 
     <!-- <div class="container mt-3" *ngIf="horse">-->
     <span class="table-add float-right mb-3 mr-2">
-    <button mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0"
+    <button id="banneImage" mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0"
             (click)="openAddRecipeModal(content)"> add Recipe</button>
     </span>
     <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
@@ -19,6 +19,7 @@
 <div class="input-group">
   <input   pattern=".{2,}" required minlength="2"   type="text" name="name" >
 </div>
+
     <mat-list     class="content">
       <mat-list-item  *ngFor="let r of recipes; let index= index">
 
