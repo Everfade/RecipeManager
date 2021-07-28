@@ -8,8 +8,27 @@
 @import '~bootstrap/scss/bootstrap';
 
 
-html, body { height: 100%;background-color: dimgray; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+textarea{
+width:400px;
+}
 
+input{
+width:400px;
+}
 
+form{
+width:400px;
+margin:0 auto;
+}
+
+#save-button{
+border:2px solid #4CAF50;
+}
+
+#save-button:hover{
+background-color: #4CAF50;
+text-color:#4CAF50;
+}

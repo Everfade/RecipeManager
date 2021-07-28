@@ -59,29 +59,33 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Recipe</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" style="color:red" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <form>
+  <div class="modal-body" style="text-align:left">
+      <form>
       <div class="form-group">
         <label >Name</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1"  type="text" name="name" >
+          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1"  type="text" name="name" style="width:300px;">
         </div>
         <label >Description</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.description" type="text"  name="description">
+          <input [(ngModel)]="modalContent.description" type="text"  name="description" style="width:300px">
         </div>
 
         <div class="form-group custom-input-overlap">
-          <label>instructions</label><br>
+          <label>Instructions</label><br>
+          <div class="input-group">
           <textarea appStringListInput [(stringArray)]="modalContent.instructions"></textarea>
         </div>
+        </div>
         <div class="form-group custom-input-overlap">
-          <label>ingredients</label><br>
-          <input [(ngModel)]="modalContent.ingredients" pattern=".{2,}" required minlength="2" value="1"  type="text" name="name" >
+          <label>Ingredients</label>
+          <div class="input-group">
+          <input [(ngModel)]="modalContent.ingredients"   type="text" name="name">
+        </div>
         </div>
       </div>
     </form>
@@ -92,7 +96,7 @@
     </button>
   </div>
   <div class="modal-footer">
-    <button type="button"  class="btn btn-outline-dark" (click)="save(content)">Save</button>
+    <button id="save-button" type="button" style="color:black" class="btn btn-outline-dark" (click)="save(content)">Save</button>
   </div>
 
 </ng-template>
