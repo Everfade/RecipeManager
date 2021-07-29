@@ -193,8 +193,8 @@ export class RecipeComponent implements OnInit {
   applyFilter(filterValue: Object) {
 
     this.dataSource.filter=filterValue.toString().trim().toLowerCase();
-    console.log(this.dataSource.data)
-    this.recipes=this.dataSource.filteredData;
+
+
 
   }
 }
