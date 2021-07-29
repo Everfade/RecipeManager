@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import{RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbCarouselModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import{TagComponent} from "./tag/tag.component";
 import {SuggestionsComponent} from "./suggestions/suggestions.component";
 import {CommonModule, DatePipe} from "@angular/common";
@@ -20,12 +20,15 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {MatIconModule} from "@angular/material/icon";
-import {MatListModule} from "@angular/material/list";
+import {MatList, MatListModule} from "@angular/material/list";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCard, MatCardContent, MatCardModule} from "@angular/material/card";
 import {ColorPickerModule} from "ngx-color-picker";
 import {MatChipsModule} from "@angular/material/chips";
+import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { StartComponent } from './start/start.component';
+import {MatFormField, MatFormFieldControl} from "@angular/material/form-field";
 
 
 @NgModule({
@@ -38,6 +41,7 @@ import {MatChipsModule} from "@angular/material/chips";
     RecipeComponent,
     StringhandlerComponent,
     StringListInputDirective,
+    StartComponent,
 
 
 
@@ -52,7 +56,7 @@ import {MatChipsModule} from "@angular/material/chips";
     NgbModule,ReactiveFormsModule, BrowserAnimationsModule,
     ScrollingModule,
     MatToolbarModule,
-    MatListModule,
+    MatListModule,NgbCarouselModule,
     MatDividerModule,
     MatButtonModule,
     MatIconModule,

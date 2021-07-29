@@ -1,103 +1,104 @@
 <div class="card">
-  <mat-card  class="card-header text-center font-weight-bold text-uppercase py-4">
-    <mat-card-title  >Recipes</mat-card-title>
+  <mat-card class="card-header text-center font-weight-bold text-uppercase py-4">
+    <mat-card-title>Recipes</mat-card-title>
 
     <!-- <div class="container mt-3" *ngIf="horse">-->
     <span class="table-add float-right mb-3 mr-2">
-    <button id="banneImage" mat-raised-button color="black" background="black" rounded="true" size="sm" class="my-0"
-            (click)="openAddRecipeModal(content)"> add Recipe</button>
+    <button (click)="openAddRecipeModal(content)" background="black" class="my-0" color="black" id="banneImage" mat-raised-button rounded="true"
+            size="sm"> add Recipe</button>
     </span>
-    <div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
+    <div *ngIf="displayAlert" class="alert alert-info alert-dismissible fade show" role="alert">
       <strong>Task: </strong> {{alertMessage}}
-      <button  mat-raised-button  (click)="hideAlert($event)">
+      <button (click)="hideAlert($event)" mat-raised-button>
       </button>
     </div>
 
   </mat-card>
 </div>
-<label >Search</label>
-<div class="input-group">
-  <input   pattern=".{2,}" required minlength="2"   type="text" name="name" >
-</div>
+<form>
+  <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Filter">
+</form>
 
-    <mat-list     class="content">
-      <mat-list-item  *ngFor="let r of recipes; let index= index">
+<mat-list  class="content">
+  <mat-list-item *ngFor="let r of dataSource.filteredData; let index= index">
 
-        <h1 matLine> <h4>{{r.name}}</h4> </h1>
+    <h1 matLine><h4>{{r.name}}</h4></h1>
 
-        <mat-chip-list aria-label="tag selection" *ngFor="let t of tags;let id = index">
-          <ng-container *ngIf="recipes[index].tags.includes(t.id)">
-          <mat-chip   [ngStyle]="{'background-color':t.color}">
-            <span style="mix-blend-mode: difference;color: white;">{{t.name}}</span></mat-chip>
-          </ng-container>
-        </mat-chip-list>
-        <p matLine>
-          <span> {{r.description}} </span>
-        </p>
+    <mat-chip-list *ngFor="let t of tags;let id = index" aria-label="tag selection">
+      <ng-container *ngIf="recipes[index].tags.includes(t.id)">
+        <mat-chip [ngStyle]="{'background-color':t.color}">
+          <span style="mix-blend-mode: difference;color: white;">{{t.name}}</span></mat-chip>
+      </ng-container>
+    </mat-chip-list>
+    <p matLine>
+      <span> {{r.description}} </span>
+    </p>
 
-        <button   mat-icon-button color="primary" [matMenuTriggerFor]="itemMenu" [matMenuTriggerData]="{id:index}" >
-          <mat-icon>
-            more_vert
-          </mat-icon>
-        </button>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
+    <button [matMenuTriggerData]="{id:index}" [matMenuTriggerFor]="itemMenu" color="primary" mat-icon-button>
+      <mat-icon>
+        more_vert
+      </mat-icon>
+    </button>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
 
-    <mat-menu #itemMenu="matMenu" #aboveMenu="matMenu">
-      <ng-template matMenuContent let-id="id">
+<mat-menu #aboveMenu="matMenu" #itemMenu="matMenu">
+  <ng-template let-id="id" matMenuContent>
 
-        <button mat-menu-item    (click)="openRecipeDetail(id)">View</button>
+    <button (click)="openRecipeDetail(id)" mat-menu-item>View</button>
 
-        <button mat-menu-item    (click)="openTagDialog(content2,id)">Tags</button>
-
+    <button (click)="openTagDialog(content2,id)" mat-menu-item>Tags</button>
 
 
-      </ng-template>
+  </ng-template>
 
-    </mat-menu>
+</mat-menu>
 
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Recipe</h4>
-    <button type="button" class="close" style="color:red" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" style="color:red" type="button">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body" style="text-align:left">
-      <form>
+    <form>
       <div class="form-group">
-        <label >Name</label>
+        <label>Name</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.name" pattern=".{2,}" required minlength="2" value="1"  type="text" name="name" style="width:300px;">
+          <input [(ngModel)]="modalContent.name" minlength="2" name="name" pattern=".{2,}" required style="width:300px;"
+                 type="text" value="1">
         </div>
-        <label >Description</label>
+        <label>Description</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.description" type="text"  name="description" style="width:300px">
+          <input [(ngModel)]="modalContent.description" name="description" style="width:300px" type="text">
         </div>
 
         <div class="form-group custom-input-overlap">
           <label>Instructions</label><br>
           <div class="input-group">
-          <textarea appStringListInput [(stringArray)]="modalContent.instructions"></textarea>
-        </div>
+            <textarea [(stringArray)]="modalContent.instructions" appStringListInput></textarea>
+          </div>
         </div>
         <div class="form-group custom-input-overlap">
           <label>Ingredients</label>
           <div class="input-group">
-          <input [(ngModel)]="modalContent.ingredients"   type="text" name="name">
-        </div>
+            <input [(ngModel)]="modalContent.ingredients" name="name" type="text">
+          </div>
         </div>
       </div>
     </form>
   </div>
-  <div *ngIf="displayAlertModal"   class="alert alert-info alert-dismissible fade show" role="alert">
+  <div *ngIf="displayAlertModal" class="alert alert-info alert-dismissible fade show" role="alert">
     <strong>Task: </strong> {{alertMessage}}
-    <button  mat-raised-button  (click)="hideAlert($event)">
+    <button (click)="hideAlert($event)" mat-raised-button>
     </button>
   </div>
   <div class="modal-footer">
-    <button id="save-button" type="button" style="color:black" class="btn btn-outline-dark" (click)="save(content)">Save</button>
+    <button (click)="save(content)" class="btn btn-outline-dark" id="save-button" style="color:black" type="button">
+      Save
+    </button>
   </div>
 
 </ng-template>
@@ -105,36 +106,34 @@
 <ng-template #content2 let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="tagModal">Edit Tags</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
 
 
-  <mat-selection-list #tagSelection id="tagSelector"   [(ngModel)]="this.selectedRecipe.tags">
+    <mat-selection-list #tagSelection [(ngModel)]="this.selectedRecipe.tags" id="tagSelector">
 
 
+      <mat-list-option *ngFor="let t of tags" [(value)]="t.id" [compareWith]="compareFunction">
 
 
-
-    <mat-list-option  *ngFor="let t of tags"    [(value)]="t.id" [compareWith]="compareFunction" >
-
-
-     <a style="mix-blend-mode: difference;color: white;">
-      <mat-chip   [ngStyle]="{'background-color':t.color}">
-        {{t.name}}</mat-chip></a>
-      <mat-divider></mat-divider>
-    </mat-list-option>
+        <a style="mix-blend-mode: difference;color: white;">
+          <mat-chip [ngStyle]="{'background-color':t.color}">
+            {{t.name}}</mat-chip>
+        </a>
+        <mat-divider></mat-divider>
+      </mat-list-option>
 
 
-  </mat-selection-list>
+    </mat-selection-list>
 
 
   </div>
 
   <div class="modal-footer">
-    <button type="button"  class="btn btn-outline-dark" (click)="saveTags(content2)">Save</button>
+    <button (click)="saveTags(content2)" class="btn btn-outline-dark" type="button">Save</button>
   </div>
 </ng-template>
 

@@ -1,0 +1,44 @@
+
+  <ngb-carousel  [interval]="5000" class="container-fluid" *ngIf="images">
+    <ng-template ngbSlide>
+      <div class="d-flex align-items-center justify-content-center min-vh-100">
+        <img class="carousel-img-width" [src]="images[0]" alt="Random first slide">
+      </div>
+      <div class="carousel-caption">
+        <h1 style="font-size: 45px">Welcome Bernadette</h1><br>
+        <h2 style="font-size: 40px">{{selectedGreeting}}</h2>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="d-flex align-items-center justify-content-center min-vh-100">
+        <img class="carousel-img-width"  [src]="images[1]" alt="Random second slide">
+      </div>
+      <div class="carousel-caption">
+        <h1 style="font-size: 45px">Welcome Bernadette</h1><br>
+        <h2 style="font-size: 40px">{{selectedGreeting}}</h2>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="d-flex align-items-center justify-content-center min-vh-100">
+        <img class="carousel-img-width"[src]="images[2]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1 style="font-size: 45px">Welcome Bernadette</h1><br>
+        <h2 style="font-size: 40px">{{selectedGreeting}}</h2>
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="d-flex align-items-center justify-content-center min-vh-100">
+        <img class="carousel-img-width" [src]="images[3]" alt="Random third slide">
+      </div>
+      <div class="carousel-caption">
+        <h1 style="font-size: 45px">Welcome Bernadette</h1><br>
+        <h2 style="font-size: 40px">{{selectedGreeting}}</h2>
+      </div>
+    </ng-template>
+
+  </ngb-carousel>
+
+  <router-outlet></router-outlet>
+
+

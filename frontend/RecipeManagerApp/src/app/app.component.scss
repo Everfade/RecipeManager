@@ -3,10 +3,11 @@ html, body, app-root, .app-frame {
   margin: 0;
   height: 100%;
   box-sizing: border-box;
-
+  background-color: black;
 }
-.image{
-  height:40em; background-size:cover; width:auto;
-  background-image:url("../assets/palmtreecut.png");
-  background-position:50% 50%;
+
+
+
+container, .container-sm, .container-md {
+//  max-width: 1770px;
 }

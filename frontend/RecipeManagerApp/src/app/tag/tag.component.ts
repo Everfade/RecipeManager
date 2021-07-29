@@ -168,7 +168,7 @@ export class TagComponent implements OnInit {
   }
 
   openRecipeDetail(id: any) {
-
+    this.router.navigate(['recipes/' + this.recipes[id].id], {state: {data: {Number: this.recipes[id].id}}});
   }
 
   navigateBack() {

@@ -1,8 +1,6 @@
-
-
-<div *ngIf="displayAlert"   class="alert alert-info alert-dismissible fade show" role="alert">
+<div *ngIf="displayAlert" class="alert alert-info alert-dismissible fade show" role="alert">
   <strong>Task: </strong> {{alertMessage}}
-  <button type="button"  (click)="hideAlert($event)">
+  <button type="button" (click)="hideAlert($event)">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -12,45 +10,54 @@
   <div class="card-body">
 
     <!-- <div class="container mt-3" *ngIf="horse">-->
-    <h3>   <th>Description :</th><br></h3>
+    <h3>
+      <th>Description :</th>
+      <br></h3>
 
-            <td>{{recipe.description}}</td>
+    <td>{{recipe.description}}</td>
 
-      <br>
-      <h3>    <th>Ingredients:</th></h3>
-            {{recipe.ingredients}}
     <br>
-        <h3>    <th>Instructions:</th></h3>
+    <h3>
+      <th>Ingredients:</th>
+    </h3>
+    {{recipe.ingredients}}
+    <br>
+    <h3>
+      <th>Instructions:</th>
+    </h3>
 
-      <ul *ngFor="let ir of  recipe.instructions;let id= index ">
-        <li>{{ir}}</li>
+    <ul *ngFor="let ir of  recipe.instructions;let id= index ">
+      <li>{{ir}}</li>
 
-      </ul>
+    </ul>
 
-      <h3>    <th>Tags:</th></h3>
-      <mat-list *ngFor="let t of tags;let id= index " class="content">
-
-
-          <mat-list-item *ngIf="recipe.tags.includes(t.id)">
-                   <mat-icon     [ngStyle]="{'color':t.color}">circle  </mat-icon>  {{t.name}}
-
-          </mat-list-item>
+    <h3>
+      <th>Tags:</th>
+    </h3>
+    <mat-list *ngFor="let t of tags;let id= index " class="content">
 
 
-      </mat-list>
-      <br>
-        <span class="edit">
-              <button  mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="openRecipeEdit(content )">Edit</button>
+      <mat-list-item *ngIf="recipe.tags.includes(t.id)">
+        <mat-icon [ngStyle]="{'color':t.color}">circle</mat-icon>
+        {{t.name}}
+
+      </mat-list-item>
+
+
+    </mat-list>
+    <br>
+    <span class="edit">
+              <button mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"
+                      (click)="openRecipeEdit(content )">Edit</button>
             </span>
-        <span class="edit">
-              <button mat-raised-button  mdbBtn color="orange" rounded="true" size="sm" class="my-0"(click)="remove()">Delete</button>
+    <span class="edit">
+              <button mat-raised-button mdbBtn color="orange" rounded="true" size="sm" class="my-0" (click)="remove()">Delete</button>
             </span>
 
-
-
-</div>
 
   </div>
+
+</div>
 
 <ng-template #content let-modal>
   <div class="modal-header">
@@ -62,28 +69,29 @@
   <div class="modal-body">
     <form>
       <div class="form-group">
-        <label >Name</label>
+        <label>Name</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.name" type="text"  name="modalContent.name">
+          <input [(ngModel)]="modalContent.name" type="text" name="modalContent.name">
         </div>
-        <label >Description</label>
+        <label>Description</label>
         <div class="input-group">
-          <input [(ngModel)]="modalContent.description" type="text"  name="description">
+          <input [(ngModel)]="modalContent.description" type="text" name="description">
         </div>
 
         <div class="form-group custom-input-overlap">
           <label>instructions</label><br>
-          <textarea appStringListInput [(stringArray)]="modalContent.instructions" name="modalContent.instructions"></textarea>
+          <textarea appStringListInput [(stringArray)]="modalContent.instructions"
+                    name="modalContent.instructions"></textarea>
         </div>
         <div class="form-group custom-input-overlap">
           <label>ingredients</label><br>
-          <input [(ngModel)]="modalContent.ingredients"   type="text" name="modalContent.ingredients" >
+          <input [(ngModel)]="modalContent.ingredients" type="text" name="modalContent.ingredients">
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button"  class="btn btn-outline-dark" (click)="save(content)">Save</button>
+    <button type="button" class="btn btn-outline-dark" (click)="save(content)">Save</button>
   </div>
 
 </ng-template>
