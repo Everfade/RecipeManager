@@ -33,31 +33,30 @@ $dark-theme: mat.define-dark-theme((
 body {
   margin: 0;
   padding: 0;
+  background-color: #ddddf0;
 }
 .mat-app-background{
   background-color:black;
 }
-.carousel,.item,.active{
-  height:100%;
-}
-.carousel-inner{
-  height:100%;
-}
+
 .container, .container-sm, .container-md, .container-lg, .container-xl {
   max-width: 100%;
 }
-.container, .container-fluid,{
 
+.container, .container-fluid,{
+padding-top: 0px;
   padding-right: 0px;
   padding-left: 0px;
   margin-right: auto;
   margin-left: auto;
 }
 .min-vh-100 {
-  min-height: 90vh !important;
+  min-height: 70vh !important;
 }
 .carousel-caption{
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-  padding-bottom: 30vh;
-  font-size:50px;
+  padding-bottom: 10%;
+
 }
+
+
