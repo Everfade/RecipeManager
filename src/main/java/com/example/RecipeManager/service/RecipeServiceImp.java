@@ -54,7 +54,6 @@ public class RecipeServiceImp implements  RecipeService{
             return dao.getAllRecipes();
     }
     public  Recipe getRecipeById(Long id) throws Throwable {
-        //todo order by instruction number (theres probably some fancy delta notation for that look it up)
         return  dao.getRecipeById(id);
 
     }
@@ -70,7 +69,12 @@ public class RecipeServiceImp implements  RecipeService{
         return  null;
     }
 
-    @Override
+     @Override
+     public void updateImage(Recipe r) {
+         this.dao.addImage(r.getId(),r.getImageData());
+     }
+
+     @Override
     public Recipe getRecipe(String name) throws NotFoundException {
      return dao.getRecipe(name);
     }

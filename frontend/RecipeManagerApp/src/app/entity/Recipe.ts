@@ -7,4 +7,5 @@ export interface  Recipe{
   ingredients:string;
   instructions:[];
   tags:number[];
+  imageData:string;
 }

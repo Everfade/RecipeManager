@@ -11,7 +11,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.nio.file.Files;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -186,8 +192,6 @@ public class RecipeJDBC implements RecipeDao {
 
         for (Recipe rec: r){
             try {
-
-
             LOGGER.info(String.valueOf(rec.returnFirstTag()));
             r.get(0).addTagId(rec.returnFirstTag());}
             catch (Exception e){
@@ -195,7 +199,15 @@ public class RecipeJDBC implements RecipeDao {
             }
         }
         getInstructions(r.get(0));
-        LOGGER.info( r.get(0).toString());
+       // LOGGER.info( r.get(0).toString());
+         try{
+             String imageData =getImage(r.get(0).getId() );
+             r.get(0).setImageData(imageData);
+         }
+          catch (NotFoundException e){
+             LOGGER.info(e.getMessage());
+          }
+
         return r.get(0);
     }
 
@@ -213,9 +225,29 @@ public class RecipeJDBC implements RecipeDao {
     }
 
     @Override
+    public void addImage(Long repid, String fileContent) {
+        LOGGER.trace("deleteRecipeImage({})",repid);
+        final String sql="delete from image where repid=?";
+        jdbcTemplate.update(sql,repid);
+        LOGGER.trace("addRecipeImage({})",repid);
+        final String sql2="insert into image (repid,blob) values(?,?)";
+        jdbcTemplate.update(sql2,repid,fileContent);
+    }
+
+    @Override
+    public String getImage(Long repid) throws NotFoundException {
+        String sql="  select blob from image where repid=?";
+        List<String> images= jdbcTemplate.query(sql,this::mapImage,repid);
+        if(!(images.size() >0)){
+            throw new NotFoundException("Image with given Id doesnt exist");
+        }
+        return images.get(0);
+    }
+
+    @Override
     public List<Recipe> getMostFittingRecipes(String[] tags) {
         //ugly hack needs to be written with prepared statment
-          String sql="  select distinct recipe.name,recipe.id,recipe.description,recipe.ingredients from recipe INNER JOIN recipetags" +
+         String sql="  select distinct recipe.name,recipe.id,recipe.description,recipe.ingredients from recipe INNER JOIN recipetags" +
                  " ON RECIPE.id =recipetags.repid JOIN" +
                  " tag  ON  recipetags.tagid = tag.ID WHERE tag.name = '"+tags[0]+"'";
 
@@ -258,6 +290,9 @@ public class RecipeJDBC implements RecipeDao {
             return r;
         }
         return r;
+    }
+    private String mapImage(ResultSet resultSet,int i) throws SQLException{
+        return  resultSet.getString("blob");
     }
     private Instruction mapInstruction(ResultSet resultSet, int i) throws SQLException {
         final Instruction instruction= new Instruction();

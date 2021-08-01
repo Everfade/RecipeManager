@@ -1,7 +1,11 @@
 package com.example.RecipeManager.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.io.File;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +15,11 @@ public class Recipe implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
      @Column(nullable = true,updatable = false)
     private Long id;
+
+
+
     private String name;
+    private String imageData;
     private String description;
     @Column
     private String ingredients;
@@ -91,5 +99,11 @@ public class Recipe implements Serializable {
         return id;
     }
 
+    public String getImageData() {
+        return imageData;
+    }
 
+    public void setImageData(String   imageData) {
+        this.imageData = imageData;
+    }
 }

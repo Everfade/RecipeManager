@@ -22,6 +22,9 @@ export  class RecipeService{
   public  addRecipes(r:Recipe): Observable<Recipe>{
     return  this.httpClient.post<Recipe>(this.apiServerUrl+'/recipes/add/',r)
   }
+  public  addRecipeImage(r:Recipe): Observable<Recipe>{
+    return  this.httpClient.put<Recipe>(this.apiServerUrl+'/recipes/addImage/',r)
+  }
   public  updateRecipe(r:Recipe): Observable<Recipe>{
     return  this.httpClient.put<Recipe>(this.apiServerUrl+'/recipes/update/',r)
   }

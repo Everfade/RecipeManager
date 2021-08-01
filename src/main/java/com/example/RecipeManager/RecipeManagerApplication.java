@@ -17,7 +17,11 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 
 @SpringBootApplication
@@ -51,14 +55,16 @@ public class RecipeManagerApplication {
 		source.registerCorsConfiguration("/**", config);
 		return new CorsFilter(source);
 	}*/
-	public static void main(String[] args) throws NotFoundException {
-		SpringApplication.run(RecipeManagerApplication.class, args);
+	public static void main(String[] args) throws NotFoundException, IOException {
+	 	SpringApplication.run(RecipeManagerApplication.class, args);
+	//	File fi = new File("D:/RPcode/RecipeManager/Frontend/RecipeManagerApp/Src/assets/palm1.png");
+		//byte[] fileContent = Files.readAllBytes(fi.toPath());
+	////recipeJDBC.addImage(44l,encodedString);
 
-		Recipe r= new Recipe();
-		r.setName("test");
-		r.setDescription("test2");
 	//	recipeJDBC.addRecipe(r);
-		System.out.println( recipeJDBC.getAllRecipes());
+		//	System.out.println( recipeJDBC.getAllRecipes());
+		System.out.println("System up and running...");
+
 
 	}
 

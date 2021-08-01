@@ -6,7 +6,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {TagService} from "../service/TagService";
 import {Tag} from "../entity/Tag";
 import {HttpErrorResponse} from "@angular/common/http";
-
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser'
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -20,12 +20,15 @@ export class RecipeDetailComponent implements OnInit {
   public displayAlert: boolean = false;
   public errorMessage: string = "";
   public alertMessage: string = "";
-  public modalContent: Recipe={description: "", id: 0, ingredients: "", instructions: [], tags: [], name:"r1"};
-
-  public recipe: Recipe;
+  private selectedFile:File;
+  public modalContent: Recipe={description: "", id: 0, ingredients: "",
+    instructions: [], tags: [], name:"r1",    imageData: "undefined"};
+  public recipe: Recipe=this.modalContent;
   id: number;
+  public selectedFileName:string="";
+  public displayImage:any;
 
-  constructor(private rs: RecipeService, private ts: TagService, private router: Router,
+  constructor(private sanitizer:DomSanitizer,private rs: RecipeService, private ts: TagService, private router: Router,
               private route: ActivatedRoute, private modalService: NgbModal) {
     this.recipeService = rs;
     this.tagsService = ts;
@@ -35,9 +38,15 @@ export class RecipeDetailComponent implements OnInit {
     this.id = parseInt(this.route.snapshot.paramMap.get('id'))
     console.log(this.id);
     this.rs.getRecipeBy(this.id).subscribe((data: Recipe) => {
-      console.log(data)
+
       this.modalContent = data;
       this.recipe = data;
+      const contentType = 'image/png';
+     // const blob= new Blob([data.imageData],{type:contentType});
+      const blob = 'data:image/png;base64,' + data.imageData;
+      this.displayImage  = this.sanitizer.bypassSecurityTrustUrl(blob);
+
+
     });
     this.getTags();
   };
@@ -144,5 +153,33 @@ export class RecipeDetailComponent implements OnInit {
     this.displayAlert = false;
 
   }
+
+  onFileChanged(event) {
+    const file = event.target.files[0]
+    this.selectedFileName=file.name
+    this.selectedFile=file;
+  }
+
+  onUpload() {
+    let data=""
+    this.selectedFileName="";
+    const reader: FileReader = new FileReader();
+    reader.readAsDataURL(this.selectedFile);
+    reader.onload = (): string => {
+      const base64String: string = (reader.result as string).match(
+        /.+;base64,(.+)/
+      )[1];
+      this.recipe.imageData=base64String;
+      this.rs.addRecipeImage(this.recipe);
+     return base64String;
+    };
+
+
+
+
+
+
+  }
+
 
 }

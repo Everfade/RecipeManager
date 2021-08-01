@@ -33,7 +33,8 @@ export class RecipeComponent implements OnInit {
     description: "",
     ingredients: "",
     instructions: [],
-    tags: []
+    tags: [],
+    imageData:"undefined"
   };
   public selectedRecipe = this.modalContent;
   tagModal: any;

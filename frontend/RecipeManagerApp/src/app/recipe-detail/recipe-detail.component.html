@@ -8,31 +8,34 @@
 <div class="card">
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4" style="font-size: 25px">{{recipe.name}} Recipe</h3>
   <div class="card-body">
-
+    <img class="center" id="recipeImage" [src]="displayImage" alt="no image"/> <hr>
     <!-- <div class="container mt-3" *ngIf="horse">-->
-    <h3>
+    <h3 class="recipe-header">
       <th>Description:</th>
-      <br></h3>
+      </h3 >
 
-    <td>{{recipe.description}}</td>
+
+    <td class="recipe-text">{{recipe.description}}</td>
 
     <br>
-    <mat-divider></mat-divider>
-    <h3>
+    <hr>
+    <h3 class="recipe-header">
       <th>Ingredients:</th>
-    </h3>
+    </h3   >
+  <span  class="recipe-text">
     {{recipe.ingredients}}
+  </span>
     <br>
-    <mat-divider></mat-divider>
-    <h3>
+    <hr>
+    <h3 class="recipe-header">
       <th>Instructions:</th>
     </h3>
 
     <ul *ngFor="let ir of  recipe.instructions;let id= index ">
-      <li>{{ir}}</li>
+      <li class="recipe-text">{{ir}}</li>
 
     </ul>
-    <mat-divider></mat-divider>
+    <hr>
     <h3>
       <th>Tags:</th>
     </h3>
@@ -41,6 +44,7 @@
 
       <mat-list-item *ngIf="recipe.tags.includes(t.id)">
         <mat-icon [ngStyle]="{'color':t.color}">circle</mat-icon>
+
         {{t.name}}
 
       </mat-list-item>
@@ -49,14 +53,21 @@
     </mat-list>
     <br>
     <span class="edit">
-              <button mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"
+              <button    mat-raised-button id="box" mdbBtn color="orange" rounded="true" size="sm" class="my-0"
                       (click)="openRecipeEdit(content )">Edit</button>
+
+              <button style="margin-left: 1em"  mat-raised-button mdbBtn color="orange" rounded="true" size="sm" class="my-0" (click)="remove()">Delete</button>
             </span>
-    <span class="edit">
-              <button mat-raised-button mdbBtn color="orange" rounded="true" size="sm" class="my-0" (click)="remove()">Delete</button>
-            </span>
+    <input
+      style="display: none;float: right"
+      type="file" (change)="onFileChanged($event)"
+      #fileInput>
 
 
+    <button  style="float: right; margin-left: 1em" mat-raised-button  (click)="fileInput.click()">Select Image</button>
+
+    <button mat-raised-button style="float: right;"  (click)="onUpload()">Upload</button>
+    <label style=";float:right;margin-right:1em; text-align: center;"> {{selectedFileName}}</label>
   </div>
 
 </div>
@@ -88,7 +99,7 @@
         <div class="form-group custom-input-overlap">
           <label>Ingredients</label><br>
           <mat-form-field  id="inputIngred">
-            <textarea style="height:100px;width:450px;font-size: 18px" matInput 
+            <textarea style="height:100px;width:450px;font-size: 18px" matInput
                       [(ngModel)]="modalContent.ingredients" type="text" name="modalContent.ingredients"></textarea>
           </mat-form-field>
         </div>

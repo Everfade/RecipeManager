@@ -11,7 +11,7 @@ export class StartComponent implements OnInit {
   randomGreetingEvening:String[]=["Hope you had a nice day!","Good evening","Hows it going?"]
   selectedGreeting:String=""
 
-  images = [1, 2, 3,4,5].map((n) => `../assets/palm${n}.jpg`);
+  images = [1, 2, 3,4,5].map((n) => `../assets/palm${n}.png`);
   constructor() { }
 
   ngOnInit(): void {

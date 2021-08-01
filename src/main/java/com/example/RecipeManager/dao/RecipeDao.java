@@ -4,6 +4,7 @@ import com.example.RecipeManager.model.Recipe;
 import com.example.RecipeManager.model.Tag;
 import javassist.NotFoundException;
 
+import java.sql.Blob;
 import java.util.List;
 
 public interface RecipeDao {
@@ -20,4 +21,7 @@ public interface RecipeDao {
     Recipe getRecipeById(Long id) throws NotFoundException;
 
     void deleteRecipeById(Long id);
+
+    void addImage(Long id, String fileContent);
+      String getImage(Long id) throws NotFoundException;
 }

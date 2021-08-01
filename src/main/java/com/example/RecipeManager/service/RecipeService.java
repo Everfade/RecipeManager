@@ -19,4 +19,6 @@ public interface RecipeService {
     List<Recipe> getMostFittingRecipes(String[] tags);
 
     Recipe updateRecipe(Recipe r);
+
+    void updateImage(Recipe r);
 }

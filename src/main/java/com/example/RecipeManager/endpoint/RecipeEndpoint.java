@@ -63,6 +63,14 @@ public class RecipeEndpoint {
         recipeService.editRecipe(r);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/addImage")
+    public ResponseEntity<Recipe> updateImage(@RequestBody Recipe r){
+        LOGGER.info("PUT"+BASE_URL+"/UPDATEImage for "+r.getName()+" "+r.getTags()+" "+r.getIngredients());
+        if(r.getImageData()==null)return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        recipeService.updateImage(r);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteRecipe(@PathVariable("id") Long id) throws Throwable {
         LOGGER.info("DELETE " + BASE_URL + "/delete/"+id);

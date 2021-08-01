@@ -106,7 +106,7 @@
   <div class="modal-header">
     <h4 class="modal-title" id="tagModal">Edit Tags</h4>
     <button (click)="modal.dismiss('Cross click')" aria-label="Close" class="close" type="button">
-      <span aria-hidden="true">&times;</span>
+
     </button>
   </div>
   <div class="modal-body">
@@ -118,9 +118,8 @@
       <mat-list-option *ngFor="let t of tags" [(value)]="t.id" [compareWith]="compareFunction">
 
 
-
-        <mat-chip [ngStyle]="{'background-color':t.color}">
-          <span style=" color: white; text-align: center" >{{t.name}}</span></mat-chip>
+        <mat-chip style="width:120px" [ngStyle]="{'background-color':t.color}">
+          <span style=" color: white;" >{{t.name}}</span></mat-chip>
 
 
 
