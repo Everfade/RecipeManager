@@ -6,22 +6,24 @@
 </div>
 
 <div class="card">
-  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">{{recipe.name}} Recipe</h3>
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4" style="font-size: 25px">{{recipe.name}} Recipe</h3>
   <div class="card-body">
 
     <!-- <div class="container mt-3" *ngIf="horse">-->
     <h3>
-      <th>Description :</th>
+      <th>Description:</th>
       <br></h3>
 
     <td>{{recipe.description}}</td>
 
     <br>
+    <mat-divider></mat-divider>
     <h3>
       <th>Ingredients:</th>
     </h3>
     {{recipe.ingredients}}
     <br>
+    <mat-divider></mat-divider>
     <h3>
       <th>Instructions:</th>
     </h3>
@@ -30,7 +32,7 @@
       <li>{{ir}}</li>
 
     </ul>
-
+    <mat-divider></mat-divider>
     <h3>
       <th>Tags:</th>
     </h3>
@@ -79,20 +81,24 @@
         </div>
 
         <div class="form-group custom-input-overlap">
-          <label>instructions</label><br>
-          <textarea appStringListInput [(stringArray)]="modalContent.instructions"
+          <label>Instructions</label><br>
+          <textarea  style="height:100px;width:450px;font-size: 18px" appStringListInput [(stringArray)]="modalContent.instructions"
                     name="modalContent.instructions"></textarea>
         </div>
         <div class="form-group custom-input-overlap">
-          <label>ingredients</label><br>
-          <input [(ngModel)]="modalContent.ingredients" type="text" name="modalContent.ingredients">
+          <label>Ingredients</label><br>
+          <mat-form-field  id="inputIngred">
+            <textarea style="height:100px;width:450px;font-size: 18px" matInput 
+                      [(ngModel)]="modalContent.ingredients" type="text" name="modalContent.ingredients"></textarea>
+          </mat-form-field>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="save(content)">Save</button>
-  </div>
+    <div style="text-align: center;">
+    <button id="save-button" type="button" class="btn btn-outline-dark" (click)="save(content)">Save</button>
+  </div>  </div>
 
 </ng-template>
 

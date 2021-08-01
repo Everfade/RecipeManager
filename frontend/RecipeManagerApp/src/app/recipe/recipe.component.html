@@ -19,14 +19,14 @@
 </form>
 
 <mat-list  class="content">
-  <mat-list-item *ngFor="let r of dataSource.filteredData; let index= index"   (click)="openRecipeDetail(index)">
+  <mat-list-item *ngFor="let r of dataSource.filteredData; let index= index"   >
 
-    <h1 matLine><h4>{{r.name}}</h4></h1>
+    <h1 (click)="openRecipeDetail(index)" matLine><h4>{{r.name}}</h4></h1>
 
     <mat-chip-list *ngFor="let t of tags;let id = index" aria-label="tag selection">
       <ng-container *ngIf="recipes[index].tags.includes(t.id)">
         <mat-chip [ngStyle]="{'background-color':t.color}">
-          <span style="mix-blend-mode: difference;color: white;">{{t.name}}</span></mat-chip>
+          <span style=" color: white;" >{{t.name}}</span></mat-chip>
       </ng-container>
     </mat-chip-list>
     <p matLine>
@@ -45,9 +45,9 @@
 <mat-menu #aboveMenu="matMenu" #itemMenu="matMenu">
   <ng-template let-id="id" matMenuContent>
 
-    <button (click)="openRecipeDetail(id)" mat-menu-item>View</button>
+    <!--   <button (click)="openRecipeDetail(id)" mat-menu-item>View</button>-->
 
-    <button (click)="openTagDialog(content2,id)" mat-menu-item>Tags</button>
+<button (click)="openTagDialog(content2,id)" mat-menu-item>Tags</button>
 
 
   </ng-template>
@@ -118,10 +118,14 @@
       <mat-list-option *ngFor="let t of tags" [(value)]="t.id" [compareWith]="compareFunction">
 
 
-        <a style="mix-blend-mode: difference;color: white;">
-          <mat-chip [ngStyle]="{'background-color':t.color}">
-            {{t.name}}</mat-chip>
-        </a>
+
+        <mat-chip [ngStyle]="{'background-color':t.color}">
+          <span style=" color: white; text-align: center" >{{t.name}}</span></mat-chip>
+
+
+
+
+
         <mat-divider></mat-divider>
       </mat-list-option>
 
@@ -132,7 +136,8 @@
   </div>
 
   <div class="modal-footer">
+    <div style="text-align: center;">
     <button (click)="saveTags(content2)" class="btn btn-outline-dark" type="button">Save</button>
-  </div>
+  </div>  </div>
 </ng-template>
 

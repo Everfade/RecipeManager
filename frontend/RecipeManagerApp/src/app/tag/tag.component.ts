@@ -18,12 +18,12 @@ export class TagComponent implements OnInit {
   public showTagTable = true;
   public showRecipeTable = false;
   public tags: Tag[] = [];
-  public selectedTags:number[] =[]
+  public selectedTags: number[] = []
   tagService: TagService;
   recipeService: RecipeService;
   public recipes: Recipe[] = [];
-  displayAlert: boolean=false;
-  displayAlertModal:boolean=false;
+  displayAlert: boolean = false;
+  displayAlertModal: boolean = false;
   alertMessage: string;
   modalContent: Tag = {
     color: "", id: 0,
@@ -55,7 +55,9 @@ export class TagComponent implements OnInit {
   openTagAdd(content: any) {
     this.modalService.open(content);
   }
-  compareFunction = (o1: any, o2: any)=> o1.id===o2.id;
+
+  compareFunction = (o1: any, o2: any) => o1.id === o2.id;
+
   openTagEdit(id: number) {
 
   }
@@ -65,43 +67,40 @@ export class TagComponent implements OnInit {
   }
 
   hideAlert($event: MouseEvent) {
-    this.displayAlert=false;
+    this.displayAlert = false;
   }
 
   findFittingRecipe(content: any) {
 
 
+    let searchTags: String[] = [];
+    for (let i = 0; i < this.selectedTags.length; i++) {
+      let index = this.tags.findIndex(
+        (item) => item.id == this.selectedTags[i]);
+      if (index > 0 && index < this.tags.length) {
+        searchTags.push(this.tags[index].name)
+      }
+    }
+    let s = searchTags.toString()
 
+    console.log("data: " + searchTags)
+    this.recipeService.getRecipesFiltered(searchTags).subscribe(data => {
+      this.recipes = data;
+      this.showTagTable = false;
+      this.showRecipeTable = true;
 
-      let searchTags:String[]=[];
-       for(let i=0;i<this.selectedTags.length;i++){
-         let index=this.tags.findIndex(
-           (item) => item.id==this.selectedTags[i]);
-         if(index>0&& index<this.tags.length) {
-           searchTags.push(this.tags[index].name)
-         }
-       }
-       let s=searchTags.toString()
-
-       console.log("data: "+searchTags)
-        this.recipeService.getRecipesFiltered(searchTags).subscribe(data => {
-          this.recipes = data;
-          this.showTagTable = false;
-          this.showRecipeTable = true;
-
-      })
-
+    })
 
 
   }
 
 
   save(content: any) {
-    if(this.modalContent.name.includes(",")){
+    if (this.modalContent.name.includes(",")) {
       this.showAlert("Name can't contain symbol:,");
       return;
     }
-    if(this.modalContent.name==""){
+    if (this.modalContent.name == "") {
       this.showAlert("Name can't be empty")
       return;
     }
@@ -131,40 +130,41 @@ export class TagComponent implements OnInit {
   }
 
   private showAlert(message: string) {
-    if(!this.displayAlert){
-      this.displayAlertModal=true;
+    if (!this.displayAlert) {
+      this.displayAlertModal = true;
     }
 
-    this.alertMessage=message;
-    setTimeout(()=>{
-      this.displayAlertModal=false;
-      this.displayAlert=false;
-      this.alertMessage="";
+    this.alertMessage = message;
+    setTimeout(() => {
+      this.displayAlertModal = false;
+      this.displayAlert = false;
+      this.alertMessage = "";
 
-    },4000)
+    }, 4000)
 
   }
 
   delete(id: number) {
-    console.log(id);
-    this.tagService.deleteTag(this.tags[id].id).subscribe(resp => {
-      }, (error: HttpErrorResponse) => {
-        this.defaultServiceErrorHandling(error);
-        setTimeout(() => {
-          this.error = false;
-        }, 5000);
-      }, () => {
-        this.showAlert("Tag deleted")
-        this.tags.splice(id);
+    if (confirm("Are you sure you want to delete \"" + this.tags[id].name + "\" tag?")) {
+      this.tagService.deleteTag(this.tags[id].id).subscribe(resp => {
+        }, (error: HttpErrorResponse) => {
+          this.defaultServiceErrorHandling(error);
+          setTimeout(() => {
+            this.error = false;
+          }, 5000);
+        }, () => {
+          this.showAlert("Tag deleted")
+          this.tags.splice(id);
 
-        this.getAllTags();
-        this.tags.push(this.modalContent);
-        setTimeout(() => {
-          this.displayAlert = false;
-        }, 5000);
-      }
-    );
+          this.getAllTags();
+          this.tags.push(this.modalContent);
+          setTimeout(() => {
+            this.displayAlert = false;
+          }, 5000);
+        }
+      );
 
+    }
   }
 
   openRecipeDetail(id: any) {
@@ -172,41 +172,41 @@ export class TagComponent implements OnInit {
   }
 
   navigateBack() {
-    this.showRecipeTable=false;
-    this.showTagTable=true;
+    this.showRecipeTable = false;
+    this.showTagTable = true;
   }
 
-  editTag(id,content:any) {
+  editTag(id, content: any) {
     console.log(id)
-    this.modalContent=this.tags[id];
+    this.modalContent = this.tags[id];
     this.modalService.open(content);
 
   }
 
-  saveTagEdit(content:any) {
-    if(this.modalContent.name.includes(",")){
+  saveTagEdit(content: any) {
+    if (this.modalContent.name.includes(",")) {
       this.showAlert("Name can't contain symbol:,");
       return;
     }
-    if(this.modalContent.name==""){
+    if (this.modalContent.name == "") {
       this.showAlert("Name can't be empty")
       return;
     }
-    this.tagService.updateTag(this.modalContent).subscribe(()=>{
-      this.displayAlert=true;
+    this.tagService.updateTag(this.modalContent).subscribe(() => {
+      this.displayAlert = true;
 
       this.modalService.dismissAll();
       this.getAllTags();
-      this.modalContent.name="";
-      this.modalContent.color="";
+      this.modalContent.name = "";
+      this.modalContent.color = "";
       this.showAlert("tag updated");
-    },(error:HttpErrorResponse)=> {
-      this.displayAlertModal=true;
+    }, (error: HttpErrorResponse) => {
+      this.displayAlertModal = true;
       this.showAlert(error.message);
 
-      setTimeout(()=>{
-        this.displayAlertModal=false;
-      },5000)
+      setTimeout(() => {
+        this.displayAlertModal = false;
+      }, 5000)
 
     });
 

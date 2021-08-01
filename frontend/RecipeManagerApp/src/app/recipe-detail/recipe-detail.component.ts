@@ -63,18 +63,22 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   remove() {
-    this.rs.deleteRecipes(this.id).subscribe({
-      next: data => {
-        console.log('Delete successful');
+    if(confirm("Are you sure you want to delete \""+this.recipe.name+"\"recipe?")) {
+      console.log("Implement delete functionality here");
 
-      },
-      error: error => {
-        return error.message;
-        console.error('There was an error!', error);
+      this.rs.deleteRecipes(this.id).subscribe({
+        next: data => {
+          console.log('Delete successful');
 
-      }
-    });
-    this.router.navigate(['recipes/'], {state: {data: {string: "Recipe has been deleted."}}});
+        },
+        error: error => {
+          return error.message;
+          console.error('There was an error!', error);
+
+        }
+      });
+      this.router.navigate(['recipes/'], {state: {data: {string: "Recipe has been deleted."}}});
+    }
   }
 
 

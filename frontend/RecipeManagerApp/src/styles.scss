@@ -58,5 +58,20 @@ padding-top: 0px;
   padding-bottom: 10%;
 
 }
+.mat-chip{
 
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  padding-bottom: 10%;
+}
 
+#save-button{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  border:2px solid #4CAF50;
+}
+
+#save-button:hover{
+  background-color: #4CAF50;
+  text-color:#4CAF50;
+}
