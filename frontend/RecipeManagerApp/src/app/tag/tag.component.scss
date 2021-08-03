@@ -1,15 +1,16 @@
 @use '~@angular/material' as mat;
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "~@angular/material/theming";
-
-@include mat.core();
 @import '~bootstrap/scss/bootstrap.scss';
+@include mat.core();
 
-@import '~bootstrap/scss/bootstrap';
-html, body { height: 100%;background-color: dimgray; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-checkbox{
   color:black;
+}
+.delete-button{
+  height:30px
 
 }
 .mat-icon {

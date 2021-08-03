@@ -6,7 +6,11 @@
 </div>
 
 <div class="card">
+
+  <button style="width:100px" mat-button  (click)="navigateBack()"><mat-icon style="font-size: 31px">arrow_back_io</mat-icon></button>
+
   <h3 class="card-header text-center font-weight-bold text-uppercase py-4" style="font-size: 25px">{{recipe.name}} Recipe</h3>
+
   <div class="card-body">
     <img class="center" id="recipeImage" [src]="displayImage" alt="no image"/> <hr>
     <!-- <div class="container mt-3" *ngIf="horse">-->
@@ -58,7 +62,7 @@
 
               <button style="margin-left: 1em"  mat-raised-button mdbBtn color="orange" rounded="true" size="sm" class="my-0" (click)="remove()">Delete</button>
             </span>
-    <input
+    <input accept="image/png, image/jpeg"
       style="display: none;float: right"
       type="file" (change)="onFileChanged($event)"
       #fileInput>

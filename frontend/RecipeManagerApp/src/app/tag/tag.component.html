@@ -29,16 +29,17 @@
 
 
 
-        <button  align="right" style="float: right;argin-right:200px;padding-top: 0px; padding-bottom:0px;" mat-raised-button class="btn btn-outline-dark" (click)="delete(id)">Delete</button>
+        <button  align="right" style="float: right;argin-right:200px;padding-top: 0px; padding-bottom:0px;" mat-raised-button class="delete-button" (click)="delete(id)">Delete</button>
       </div>
 
-    </mat-list-option> 
+
+    </mat-list-option>
 
     <mat-divider></mat-divider>
   </mat-selection-list>
   <div style="text-align: center;">
     <button mat-raised-button id="knopf" class="btn btn-outline-dark" (click)="findFittingRecipe(content)">Find
-      Suggestions
+ Recipes
     </button>
   </div>
 </div>

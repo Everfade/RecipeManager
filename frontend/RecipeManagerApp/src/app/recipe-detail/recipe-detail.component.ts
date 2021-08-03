@@ -165,12 +165,14 @@ export class RecipeDetailComponent implements OnInit {
     this.selectedFileName="";
     const reader: FileReader = new FileReader();
     reader.readAsDataURL(this.selectedFile);
-    reader.onload = (): string => {
+    reader.onload =  (e:any) => {
       const base64String: string = (reader.result as string).match(
         /.+;base64,(.+)/
       )[1];
       this.recipe.imageData=base64String;
-      this.rs.addRecipeImage(this.recipe);
+      const blob = 'data:image/png;base64,' + base64String;
+      this.displayImage  = this.sanitizer.bypassSecurityTrustUrl(blob);
+      this.rs.addRecipeImage(this.recipe).subscribe();
      return base64String;
     };
 
@@ -182,4 +184,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
 
+  navigateBack() {
+    this.router.navigate(["recipes/"]);
+
+  }
 }

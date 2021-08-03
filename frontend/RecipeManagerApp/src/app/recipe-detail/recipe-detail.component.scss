@@ -1,3 +1,9 @@
+@use '~@angular/material' as mat;
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "~@angular/material/theming";
+
+@include mat.core();
+
 .mat-list-base .mat-list-item {
   color: black;
 }
@@ -43,9 +49,11 @@ th{
   margin-top: 1%;
   font-weight:bolder;
   font-size: x-large;
+  color: black !important;
 }
 .recipe-text{
   font-size: large;
+  color: black !important;
 }
 hr {
   display: block;
@@ -55,4 +63,9 @@ hr {
 }
 .wrapper {
   position: relative;
+}
+#backButton{
+  height:40px !important;
+  width:4px !important;
+  font-size:48px !important;
 }
