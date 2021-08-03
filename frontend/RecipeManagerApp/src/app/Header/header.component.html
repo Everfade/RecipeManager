@@ -1,22 +1,32 @@
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark"  >
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a style="font-size: 30px" class="navbar-brand" href="/home">Miraziz Kitchen</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-
   </button>
 
-  <div color="primary" class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div color="accent" class="navbar-nav">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item   ">
+        <a  style="font-size: large" class="nav-item nav-link" routerLink="/recipes">Recepies<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ">
+        <a style="font-size: large"  class="nav-item nav-link" routerLink="/tags">Tags<span class="sr-only">(current)</span></a>
+      </li>
+      <li  class="nav-item dropdown">
+        <a  class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Settings
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Color</a>
+          <a class="dropdown-item" href="#">Send Tips</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Pet a bunny</a>
+        </div>
+      </li>
 
-      <a  style="font-size: large" class="nav-item nav-link" routerLink="/recipes">Recepies<span class="sr-only">(current)</span></a>
-      <a style="font-size: large"  class="nav-item nav-link" routerLink="/tags">Tags<span class="sr-only">(current)</span></a>
-    <!--  <a class="nav-item nav-link" routerLink="/suggestions">Suggestions<span class="sr-only">(current)</span></a>
-    --></div>
+    </ul>
+
   </div>
-
 </nav>
-
 
