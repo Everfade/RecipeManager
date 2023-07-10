@@ -1,6 +1,6 @@
 ## RecipeManager
- Website for managing cooking recipes, give them tags and generate suggestions either random or based on selected tags.
- Very outdated code.
+ Website for managing cooking recipes, give them tags and generate suggestions either random or based on selected tags for private use.
+ code outdated
 
 ## Development server
 
